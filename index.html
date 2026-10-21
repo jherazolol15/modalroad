@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#1b232d">
+<title>Modal Road</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="OVA de inglés para grado 8.º: aprende los verbos modales como señales de tránsito, juega y descarga tu informe en PDF.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Overpass+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a road trip. Asphalt hero with lane markings, then three stops (Learn → Play → Results),
+   every modal shown as the traffic sign that matches its function. */
+:root{
+  --bg:#eef1f4; --surface:#ffffff; --surface-2:#e3e8ee; --fg:#15202b; --muted:#566373; --line:#cdd5de;
+  --asphalt:#1b232d; --asphalt-fg:#f4f6f8; --lane:#f2b705;
+  --go:#1f7a4d; --must:#1d4e89; --stop:#c8232c; --warn:#f2b705; --warn-ink:#1b1b1b; --info:#0f7c86; --none:#6b7685;
+  --ok:#1f7a4d; --bad:#c8232c;
+  --display:"Overpass","Arial Narrow",Arial,sans-serif;
+  --body:"Atkinson Hyperlegible",Verdana,system-ui,sans-serif;
+  --mono:"Overpass Mono",ui-monospace,Menlo,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10161d; --surface:#18212b; --surface-2:#212c38; --fg:#e7ecf1; --muted:#9aa7b5; --line:#2e3a47;
+  --asphalt:#0a0e13; --asphalt-fg:#f4f6f8; --go:#3fae7a; --must:#5b8fd6; --stop:#ef5a5f; --info:#36aab4; --none:#8d98a6;
+  --ok:#3fae7a; --bad:#ef5a5f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161d; --surface:#18212b; --surface-2:#212c38; --fg:#e7ecf1; --muted:#9aa7b5; --line:#2e3a47;
+  --asphalt:#0a0e13; --asphalt-fg:#f4f6f8; --go:#3fae7a; --must:#5b8fd6; --stop:#ef5a5f; --info:#36aab4; --none:#8d98a6;
+  --ok:#3fae7a; --bad:#ef5a5f; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--asphalt)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);line-height:1.05;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lane);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:50;background:var(--lane);color:#111;padding:8px 12px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* nav */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--asphalt);color:var(--asphalt-fg);border-bottom:3px solid var(--lane)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:900;font-size:20px;letter-spacing:-.01em}
+.brand small{display:block;font-family:var(--mono);font-weight:500;font-size:10px;letter-spacing:.14em;opacity:.7}
+.brand-sign{width:30px;height:30px;background:var(--lane);transform:rotate(45deg);border-radius:4px;display:grid;place-items:center;flex:none}
+.brand-sign span{transform:rotate(-45deg);color:#111;font-weight:900;font-size:15px}
+nav.links{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+nav.links a{text-decoration:none;font-family:var(--display);font-weight:600;font-size:14px;padding:6px 10px;border-radius:6px;opacity:.85}
+nav.links a:hover{background:rgba(255,255,255,.1);opacity:1}
+@media (max-width:620px){nav.links a.opt{display:none}}
+
+/* hero */
+.hero{background:var(--asphalt);color:var(--asphalt-fg);position:relative;overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.25fr 1fr;gap:32px;align-items:center;padding-block:56px 72px;position:relative;z-index:1}
+.hero h1{font-size:clamp(46px,8vw,92px);font-weight:900;letter-spacing:-.03em}
+.hero h1 em{font-style:normal;color:var(--lane)}
+.hero p.lead{margin-top:18px;font-size:19px;max-width:34ch;color:#c9d2dc}
+.hero .tag{display:inline-block;margin-bottom:16px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--lane);border:1px solid var(--lane);padding:4px 10px;border-radius:999px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{font-family:var(--display);font-weight:800;font-size:16px;border:0;border-radius:8px;padding:13px 20px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--lane);color:#111}
+.btn-primary:hover{filter:brightness(1.07)}
+.btn-ghost{background:transparent;color:inherit;box-shadow:inset 0 0 0 2px currentColor}
+.btn-dark{background:var(--fg);color:var(--bg)}
+.facts{display:flex;gap:18px;flex-wrap:wrap;margin-top:26px;font-family:var(--mono);font-size:13px;color:#aeb9c5}
+.lane{position:absolute;left:0;right:0;bottom:26px;height:6px;background:repeating-linear-gradient(90deg,var(--lane) 0 46px,transparent 46px 86px);opacity:.85;animation:drive 2.4s linear infinite}
+@keyframes drive{to{background-position:-86px 0}}
+.signboard{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;justify-items:center}
+.signboard figure{margin:0;display:grid;justify-items:center;gap:8px}
+.signboard figcaption{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:#c9d2dc}
+@media (max-width:820px){.hero .wrap{grid-template-columns:1fr}.signboard{grid-template-columns:repeat(6,1fr)}.signboard .sign{width:52px;height:52px;font-size:11px}}
+@media (max-width:460px){.signboard{grid-template-columns:repeat(3,1fr)}}
+
+/* signs */
+.sign{width:78px;height:78px;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:15px;letter-spacing:-.01em;text-align:center;line-height:1;flex:none}
+.s-go{border-radius:50%;background:var(--go);color:#fff;box-shadow:inset 0 0 0 4px rgba(255,255,255,.85)}
+.s-must{border-radius:50%;background:var(--must);color:#fff;box-shadow:inset 0 0 0 4px rgba(255,255,255,.85)}
+.s-stop{border-radius:50%;background:#fff;color:#111;box-shadow:inset 0 0 0 9px var(--stop);position:relative}
+.s-stop::after{content:"";position:absolute;width:76%;height:7px;background:var(--stop);transform:rotate(-45deg);opacity:.9}
+.s-stop b{position:relative;z-index:1}
+.s-warn{background:var(--warn);color:var(--warn-ink);transform:rotate(45deg) scale(.78);border-radius:8px;box-shadow:inset 0 0 0 4px #111}
+.s-warn b{transform:rotate(-45deg)}
+.s-info{border-radius:8px;background:var(--info);color:#fff;box-shadow:inset 0 0 0 4px rgba(255,255,255,.85);width:96px;height:66px}
+.s-none{border-radius:50%;background:#fff;color:#111;box-shadow:inset 0 0 0 5px var(--none);position:relative}
+.s-none::after{content:"";position:absolute;width:70%;height:3px;background:var(--none);transform:rotate(-45deg);opacity:.6}
+.s-none b{position:relative;z-index:1;background:#fff;padding:2px}
+
+/* sections */
+section.block{padding-block:72px}
+.sec-head{display:grid;gap:10px;margin-bottom:32px;max-width:62ch}
+.sec-head h2{font-size:clamp(32px,5vw,50px);font-weight:900;letter-spacing:-.02em}
+.sec-head p{color:var(--muted);font-size:18px}
+.stop-label{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.stop-label i{width:12px;height:12px;border-radius:50%;background:var(--lane);box-shadow:0 0 0 3px var(--asphalt)}
+
+/* route */
+.route{display:grid;grid-template-columns:repeat(3,1fr);gap:0;position:relative}
+.route::before{content:"";position:absolute;top:27px;left:8%;right:8%;border-top:4px dashed var(--line)}
+.route-step{position:relative;padding:0 16px;display:grid;gap:10px;justify-items:start}
+.route-step .km{width:58px;height:58px;border-radius:8px;background:var(--asphalt);color:var(--lane);display:grid;place-items:center;font-family:var(--mono);font-weight:700;font-size:13px;border:3px solid var(--lane)}
+.route-step h3{font-size:24px;font-weight:800}
+.route-step p{color:var(--muted)}
+.route-step a{font-family:var(--display);font-weight:700;color:var(--fg)}
+@media (max-width:720px){.route{grid-template-columns:1fr;gap:24px}.route::before{display:none}}
+
+/* learn */
+.learn{background:var(--surface);border-block:1px solid var(--line)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.chip{font-family:var(--display);font-weight:700;font-size:14px;border:2px solid var(--line);background:transparent;color:var(--fg);padding:7px 14px;border-radius:999px;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+.chip .dot{width:10px;height:10px;border-radius:50%}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.mcard{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:20px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start}
+.mcard .sign{width:70px;height:70px;font-size:13px}
+.mcard .s-info{width:84px;height:58px}
+.mcard h3{font-size:28px;font-weight:900;letter-spacing:-.02em;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.mcard .fn{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.mcard .es{color:var(--muted);font-size:15px;margin-top:2px}
+.mcard ul{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
+.mcard li{display:flex;gap:8px;align-items:flex-start;min-width:0}
+.mcard li span{min-width:0}
+.mcard li b{background:color-mix(in srgb,var(--lane) 45%,transparent);padding:0 3px;border-radius:3px}
+.say{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer;font-size:13px;display:grid;place-items:center}
+.say:hover{border-color:var(--fg)}
+@media (max-width:400px){.mcard{grid-template-columns:1fr}}
+
+/* rules */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
+@media (max-width:820px){.rules{grid-template-columns:1fr}}
+.formula{background:var(--asphalt);color:var(--asphalt-fg);border-radius:var(--r);padding:24px;display:grid;gap:16px}
+.formula h3{font-size:22px;font-weight:800}
+.eq{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-family:var(--display);font-weight:800;font-size:18px}
+.eq span{padding:6px 12px;border-radius:6px;background:rgba(255,255,255,.08)}
+.eq .m{background:var(--lane);color:#111}
+.eq .op{background:none;padding:0;opacity:.6}
+.formula p{color:#c9d2dc;font-size:15px}
+.formula .ex{font-family:var(--mono);font-size:14px;color:#fff}
+.errors{display:grid;gap:10px}
+.errors h3{font-size:22px;font-weight:800;margin-bottom:4px}
+.err{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--bg)}
+.err div{padding:10px 14px;font-size:15px;min-width:0}
+.err .no{color:var(--bad);text-decoration:line-through;text-decoration-thickness:2px;border-right:1px solid var(--line)}
+.err .yes{color:var(--ok);font-weight:700}
+.err .why{grid-column:1/-1;border-top:1px solid var(--line);color:var(--muted);font-size:14px;padding-block:8px}
+
+/* play */
+.play-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start}
+@media (max-width:820px){.play-grid{grid-template-columns:1fr}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:24px}
+.panel h3{font-size:24px;font-weight:800;margin-bottom:6px}
+form.setup{display:grid;gap:14px;margin-top:16px}
+label{font-family:var(--display);font-weight:700;font-size:14px;display:grid;gap:6px}
+input,select{font:inherit;font-size:16px;padding:11px 12px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--fg);width:100%}
+input:focus,select:focus{border-color:var(--must);outline:none}
+.note{font-size:13px;color:var(--muted)}
+.how ol{margin:10px 0 0;padding-left:20px;display:grid;gap:6px}
+.how .score{display:flex;gap:24px;margin-top:18px;font-family:var(--display)}
+.how .score b{font-size:34px;font-weight:900;display:block;line-height:1}
+.how .score span{font-size:13px;color:var(--muted)}
+
+.game{display:grid;gap:18px}
+.hud{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.progress{height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.progress i{display:block;height:100%;background:repeating-linear-gradient(90deg,var(--lane) 0 18px,var(--asphalt) 18px 24px);transition:width .3s}
+.qtype{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.qtext{font-family:var(--display);font-weight:800;font-size:clamp(22px,3.4vw,30px);line-height:1.2;text-wrap:balance}
+.qtext .gap{display:inline-block;min-width:90px;border-bottom:4px solid var(--lane);text-align:center;color:var(--muted)}
+.qctx{color:var(--muted);font-size:15px}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:480px){.opts{grid-template-columns:1fr}}
+.opt{font:inherit;font-family:var(--display);font-weight:700;font-size:18px;text-align:left;padding:14px 16px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;display:flex;gap:10px;align-items:center}
+.opt:hover:not(:disabled){border-color:var(--fg)}
+.opt kbd{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:4px;padding:1px 6px;color:var(--muted)}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--bg))}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,var(--bg))}
+.opt:disabled{cursor:default}
+.feedback{border-radius:8px;padding:14px 16px;font-size:15px;display:grid;gap:4px}
+.feedback.good{background:color-mix(in srgb,var(--ok) 13%,var(--surface));border:1px solid var(--ok)}
+.feedback.bad{background:color-mix(in srgb,var(--bad) 10%,var(--surface));border:1px solid var(--bad)}
+.feedback b{font-family:var(--display)}
+.end{display:grid;gap:16px;justify-items:start}
+.end .big{font-family:var(--display);font-weight:900;font-size:64px;line-height:1}
+.end .big small{font-size:22px;color:var(--muted)}
+
+/* results */
+.results{background:var(--surface);border-top:1px solid var(--line)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--bg)}
+table{width:100%;border-collapse:collapse;font-size:15px;min-width:560px}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--mono)}
+tr:last-child td{border-bottom:0}
+.pill{display:inline-block;font-family:var(--mono);font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid}
+.pill.hi{color:var(--ok);border-color:var(--ok)} .pill.mid{color:#a07400;border-color:var(--warn)} .pill.lo{color:var(--bad);border-color:var(--bad)}
+.linkbtn{background:none;border:0;padding:0;font:inherit;font-family:var(--display);font-weight:700;color:var(--must);cursor:pointer;text-decoration:underline}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.res-tools{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.confirm{display:inline-flex;gap:8px;align-items:center;font-size:14px}
+.teacher-note{margin-top:20px;padding:16px 18px;border-left:4px solid var(--must);background:var(--bg);border-radius:0 8px 8px 0;font-size:15px;color:var(--muted)}
+
+/* teacher sheet */
+.sheet{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+@media (max-width:720px){.sheet{grid-template-columns:1fr}}
+.sheet .panel h3{font-size:19px}
+.sheet dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:10px 0 0;font-size:15px}
+.sheet dt{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.sheet dd{margin:0}
+.sheet ul{margin:10px 0 0;padding-left:18px;display:grid;gap:6px;font-size:15px}
+footer{background:var(--asphalt);color:#aeb9c5;font-size:14px}
+footer .wrap{padding-block:28px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer b{color:var(--asphalt-fg);font-family:var(--display)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;z-index:40}
+</style>
+
+</head>
+<body>
+<a class="skip" href="#main">Ir al contenido</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><span class="brand-sign"><span>M</span></span><span>Modal Road<small>ENGLISH · GRADE 8</small></span></a>
+    <nav class="links" aria-label="Secciones">
+      <a href="#aprender">Aprender</a>
+      <a href="#jugar">Jugar</a>
+      <a href="#resultados">Resultados</a>
+      <a class="opt" href="#docente">Docente</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero" id="inicio">
+    <div class="wrap">
+      <div>
+        <span class="tag">OVA · INGLÉS 8.º · NIVEL A2</span>
+        <h1>Los modales son <em>señales</em> de tránsito.</h1>
+        <p class="lead">Cada verbo modal te indica algo: puedes avanzar, debes hacerlo, está prohibido o es mejor que lo hagas. Aprende a leer las señales del inglés.</p>
+        <div class="cta">
+          <a class="btn btn-primary" href="#aprender">Empezar el recorrido →</a>
+          <a class="btn btn-ghost" href="#jugar">Ir al reto</a>
+        </div>
+        <div class="facts"><span>✓ 8 verbos modales</span><span>✓ 10 retos por partida</span><span>✓ Informe en PDF</span></div>
+      </div>
+      <div class="signboard" aria-label="Ejemplos de señales">
+        <figure><div class="sign s-go"><b>CAN</b></div><figcaption>habilidad</figcaption></figure>
+        <figure><div class="sign s-must"><b>MUST</b></div><figcaption>obligación</figcaption></figure>
+        <figure><div class="sign s-stop"><b>MUSTN'T</b></div><figcaption>prohibición</figcaption></figure>
+        <figure><div class="sign s-warn"><b>SHOULD</b></div><figcaption>consejo</figcaption></figure>
+        <figure><div class="sign s-info"><b>MIGHT</b></div><figcaption>posibilidad</figcaption></figure>
+        <figure><div class="sign s-none"><b>DON'T<br>HAVE TO</b></div><figcaption>no es necesario</figcaption></figure>
+      </div>
+    </div>
+    <div class="lane" aria-hidden="true"></div>
+  </section>
+
+  <section class="block" aria-labelledby="ruta-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Tu ruta de aprendizaje</span>
+        <h2 id="ruta-t">Tres paradas para dominar los modales</h2>
+      </div>
+      <div class="route">
+        <div class="route-step"><div class="km">KM 1</div><h3>Aprende</h3><p>Conoce cada modal, su función y ejemplos de la vida diaria. Escucha la pronunciación.</p><a href="#aprender">Ver las señales →</a></div>
+        <div class="route-step"><div class="km">KM 2</div><h3>Juega</h3><p>Completa oraciones, identifica funciones y corrige errores en 10 retos.</p><a href="#jugar">Comenzar el reto →</a></div>
+        <div class="route-step"><div class="km">KM 3</div><h3>Demuestra</h3><p>Revisa tus resultados y descarga tu informe en PDF para entregarlo.</p><a href="#resultados">Ver resultados →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block learn" id="aprender" aria-labelledby="aprender-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="stop-label"><i></i>Parada 1 · Learn</span>
+        <h2 id="aprender-t">El manual de señales</h2>
+        <p>Filtra por función. Toca ▶ para escuchar cada ejemplo en inglés.</p>
+      </div>
+      <div class="legend" id="filters" role="group" aria-label="Filtrar por función"></div>
+      <div class="cards" id="cards"></div>
+
+      <div class="rules">
+        <div class="formula">
+          <span class="eyebrow" style="color:var(--lane)">Regla de oro</span>
+          <h3>Así se construye una oración con modal</h3>
+          <div class="eq"><span>Sujeto</span><span class="op">+</span><span class="m">Modal</span><span class="op">+</span><span>Verbo base</span></div>
+          <p class="ex">She can play football. → She <u>can</u> play.</p>
+          <div class="eq"><span>Sujeto</span><span class="op">+</span><span class="m">Modal + not</span><span class="op">+</span><span>Verbo base</span></div>
+          <p class="ex">You mustn't run in the hallway.</p>
+          <div class="eq"><span class="m">Modal</span><span class="op">+</span><span>Sujeto</span><span class="op">+</span><span>Verbo base?</span></div>
+          <p class="ex">Should I study tonight?</p>
+          <p>Los modales no cambian con <b>he / she / it</b>, no llevan <b>to</b> después (excepto <b>have to</b>) y el verbo que sigue va en forma base.</p>
+        </div>
+        <div class="errors">
+          <h3>Errores frecuentes en 8.º</h3>
+          <div class="err"><div class="no">She cans swim.</div><div class="yes">She can swim.</div><div class="why">Los modales no llevan -s en tercera persona.</div></div>
+          <div class="err"><div class="no">You must to study.</div><div class="yes">You must study.</div><div class="why">Después del modal no va "to".</div></div>
+          <div class="err"><div class="no">He should goes home.</div><div class="yes">He should go home.</div><div class="why">El verbo principal va en forma base.</div></div>
+          <div class="err"><div class="no">Do you can help me?</div><div class="yes">Can you help me?</div><div class="why">Las preguntas se forman invirtiendo el modal, sin "do".</div></div>
+          <div class="err"><div class="no">She don't have to work.</div><div class="yes">She doesn't have to work.</div><div class="why">"Have to" sí cambia: necesita do / does.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="jugar" aria-labelledby="jugar-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="stop-label"><i></i>Parada 2 · Play</span>
+        <h2 id="jugar-t">El reto de las señales</h2>
+        <p>Cada acierto vale 10 puntos. No hay límite de tiempo: lee con calma.</p>
+      </div>
+      <div class="play-grid">
+        <div class="panel" id="stage"></div>
+        <aside class="panel how">
+          <h3>¿Cómo se juega?</h3>
+          <ol>
+            <li>Escribe tu nombre y elige el tipo de reto.</li>
+            <li>Lee la situación o la oración.</li>
+            <li>Elige una de las 4 opciones (también puedes usar las teclas 1-4).</li>
+            <li>Lee la explicación y continúa.</li>
+            <li>Al final, descarga tu informe en PDF.</li>
+          </ol>
+          <div class="score"><div><b>10</b><span>retos</span></div><div><b>100</b><span>puntos</span></div><div><b>3</b><span>tipos de reto</span></div></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="block results" id="resultados" aria-labelledby="res-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="stop-label"><i></i>Parada 3 · Results</span>
+        <h2 id="res-t">Tu bitácora de viaje</h2>
+        <p>Partidas guardadas en este dispositivo. Puedes volver a descargar cada informe.</p>
+      </div>
+      <div class="res-tools">
+        <span class="note" id="res-count"></span>
+        <span id="clear-zone"><button class="linkbtn" id="clear-btn" type="button">Borrar historial</button></span>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Estudiante</th><th>Curso</th><th>Reto</th><th>Puntaje</th><th>Fecha</th><th>Informe</th></tr></thead>
+        <tbody id="history"></tbody>
+      </table></div>
+      <p class="teacher-note"><b>Para el docente:</b> los resultados se guardan solo en el navegador de cada dispositivo. Si los estudiantes usan equipos distintos, cada uno debe descargar su PDF y entregarlo por el medio acordado (correo, Classroom, WhatsApp).</p>
+    </div>
+  </section>
+
+  <section class="block" id="docente" aria-labelledby="doc-t">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Ficha técnica del OVA</span>
+        <h2 id="doc-t">Para el docente</h2>
+      </div>
+      <div class="sheet">
+        <div class="panel">
+          <h3>Identificación</h3>
+          <dl>
+            <dt>Área</dt><dd>Humanidades: Lengua extranjera (Inglés)</dd>
+            <dt>Grado</dt><dd>Octavo (8.º)</dd>
+            <dt>Nivel</dt><dd>A2 (MCER)</dd>
+            <dt>Tema</dt><dd>Modal verbs: can, could, must, mustn't, have to, don't have to, should, may / might</dd>
+            <dt>Duración</dt><dd>2 sesiones de 55 min</dd>
+            <dt>Autor</dt><dd>Juan Pablo Herazo Sibaja</dd>
+          </dl>
+        </div>
+        <div class="panel">
+          <h3>Objetivo de aprendizaje</h3>
+          <p style="margin-top:10px;font-size:15px">Usar verbos modales para expresar habilidad, permiso, obligación, prohibición, ausencia de obligación, consejo y posibilidad en situaciones cotidianas del colegio y la comunidad.</p>
+          <ul>
+            <li>Identifica la función comunicativa de cada modal.</li>
+            <li>Construye oraciones afirmativas, negativas e interrogativas con modal + verbo base.</li>
+            <li>Corrige errores frecuentes de forma (-s, to, do).</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Secuencia didáctica</h3>
+          <ul>
+            <li><b>Exploración:</b> la metáfora de las señales de tránsito activa saberes previos.</li>
+            <li><b>Estructuración:</b> manual de señales, regla de oro y errores frecuentes.</li>
+            <li><b>Práctica:</b> reto de 10 preguntas con retroalimentación inmediata.</li>
+            <li><b>Evaluación:</b> informe PDF con puntaje y respuestas.</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Referentes</h3>
+          <ul>
+            <li>Ministerio de Educación Nacional. Derechos Básicos de Aprendizaje de Inglés, grados 6.º a 11.º.</li>
+            <li>Consejo de Europa. Marco Común Europeo de Referencia para las Lenguas (nivel A2).</li>
+            <li>Licencia del recurso: uso educativo libre (CC BY-NC 4.0).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>Modal Road</b> · Un viaje por los verbos modales · Inglés 8.º</span>
+    <span>Aprende · Juega · Demuestra</span>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+(function(){
+"use strict";
+/* ---------- DATA ---------- */
+const FUNCS = {
+  go:   {label:"Habilidad / permiso", cls:"s-go",   color:"var(--go)"},
+  must: {label:"Obligación",          cls:"s-must", color:"var(--must)"},
+  stop: {label:"Prohibición",         cls:"s-stop", color:"var(--stop)"},
+  none: {label:"No es necesario",     cls:"s-none", color:"var(--none)"},
+  warn: {label:"Consejo",             cls:"s-warn", color:"var(--warn)"},
+  info: {label:"Posibilidad",         cls:"s-info", color:"var(--info)"}
+};
+const MODALS = [
+  {m:"can", f:"go", sign:"CAN", fn:"Habilidad y permiso", es:"poder / saber hacer algo ahora.",
+   ex:[["I <b>can</b> speak two languages.","Habilidad"],["<b>Can</b> I go to the bathroom, please?","Permiso"],["My brother <b>can't</b> swim.","Negativo: can't"]]},
+  {m:"could", f:"go", sign:"COULD", fn:"Habilidad pasada y petición cortés", es:"podía / ¿podrías…?",
+   ex:[["When I was six, I <b>could</b> ride a bike.","Habilidad en el pasado"],["<b>Could</b> you open the window, please?","Petición cortés"]]},
+  {m:"must", f:"must", sign:"MUST", fn:"Obligación fuerte", es:"deber (una regla o algo que tú mismo consideras necesario).",
+   ex:[["Students <b>must</b> wear the school uniform.","Regla del colegio"],["I <b>must</b> finish this project today.","Obligación personal"]]},
+  {m:"have to", f:"must", sign:"HAVE TO", fn:"Obligación externa", es:"tener que (alguien o algo te lo exige).",
+   ex:[["I <b>have to</b> do my homework every day.","Rutina obligatoria"],["She <b>has to</b> take the bus at 6:00.","Cambia con he/she/it"]]},
+  {m:"mustn't", f:"stop", sign:"MUSTN'T", fn:"Prohibición", es:"no se debe / está prohibido.",
+   ex:[["You <b>mustn't</b> use your phone during the exam.","Regla"],["We <b>mustn't</b> throw garbage in the river.","Prohibición"]]},
+  {m:"don't have to", f:"none", sign:"DON'T<br>HAVE TO", fn:"Ausencia de obligación", es:"no es necesario (pero puedes hacerlo).",
+   ex:[["We <b>don't have to</b> go to school on Sunday.","No es necesario"],["He <b>doesn't have to</b> wear a tie.","Con he/she/it: doesn't"]]},
+  {m:"should", f:"warn", sign:"SHOULD", fn:"Consejo y recomendación", es:"debería / es buena idea.",
+   ex:[["You <b>should</b> drink water after training.","Consejo"],["You <b>shouldn't</b> sleep late before a test.","Negativo: shouldn't"]]},
+  {m:"may / might", f:"info", sign:"MIGHT", fn:"Posibilidad", es:"puede que / quizás.",
+   ex:[["It <b>might</b> rain this afternoon.","Posibilidad"],["I <b>may</b> visit my grandma on Saturday.","Plan no seguro"]]}
+];
+
+/* question types: gap (complete), func (identify function), fix (correct sentence) */
+const BANK = [
+  {t:"gap", q:"I ___ play the guitar. I practice every weekend.", o:["can","must","mustn't","should"], a:0, why:"Hablamos de una habilidad: can."},
+  {t:"gap", q:"Students ___ run in the hallways. It's dangerous!", o:["mustn't","don't have to","can","might"], a:0, why:"Es una regla que prohíbe algo: mustn't."},
+  {t:"gap", q:"You have a fever. You ___ see a doctor.", o:["should","mustn't","could","don't have to"], a:0, why:"Es un consejo: should."},
+  {t:"gap", q:"Tomorrow is a holiday. We ___ wake up early.", o:["don't have to","mustn't","can't","should"], a:0, why:"No es necesario madrugar, pero puedes hacerlo: don't have to."},
+  {t:"gap", q:"Look at those dark clouds! It ___ rain soon.", o:["might","must","can","has to"], a:0, why:"Es una posibilidad, no una certeza: might."},
+  {t:"gap", q:"When my grandpa was young, he ___ run very fast.", o:["could","can","should","must"], a:0, why:"Habilidad en el pasado: could."},
+  {t:"gap", q:"___ you help me with my homework, please?", o:["Could","Must","Should","Have"], a:0, why:"Petición cortés: Could you…?"},
+  {t:"gap", q:"My mom ___ work on Saturdays. Her boss says so.", o:["has to","have to","must to","shoulds"], a:0, why:"Obligación externa con she: has to."},
+  {t:"gap", q:"Drivers ___ stop at a red light.", o:["must","might","could","don't have to"], a:0, why:"Es una norma obligatoria: must."},
+  {t:"gap", q:"You ___ eat so much candy. It's bad for your teeth.", o:["shouldn't","don't have to","can","might"], a:0, why:"Consejo negativo: shouldn't."},
+  {t:"gap", q:"___ I borrow your pencil?", o:["Can","Must","Should","Have to"], a:0, why:"Pedir permiso: Can I…?"},
+  {t:"gap", q:"I'm not sure. I ___ go to the party on Friday.", o:["may","must","have to","mustn't"], a:0, why:"Plan posible pero no seguro: may."},
+  {t:"func", q:"“You mustn't feed the animals at the zoo.”", ctx:"¿Qué función expresa el modal?", o:["Prohibición","Consejo","Habilidad","Posibilidad"], a:0, why:"Mustn't indica que algo está prohibido."},
+  {t:"func", q:"“You should go to bed early.”", ctx:"¿Qué función expresa el modal?", o:["Consejo","Obligación","Prohibición","Permiso"], a:0, why:"Should da una recomendación."},
+  {t:"func", q:"“She can speak Portuguese.”", ctx:"¿Qué función expresa el modal?", o:["Habilidad","Prohibición","Obligación","Posibilidad"], a:0, why:"Can expresa lo que alguien sabe hacer."},
+  {t:"func", q:"“We don't have to bring lunch today.”", ctx:"¿Qué función expresa el modal?", o:["No es necesario","Prohibición","Consejo","Habilidad"], a:0, why:"Don't have to: no es obligatorio, pero no está prohibido."},
+  {t:"func", q:"“It might be sunny tomorrow.”", ctx:"¿Qué función expresa el modal?", o:["Posibilidad","Obligación","Permiso","Consejo"], a:0, why:"Might indica que algo es posible."},
+  {t:"func", q:"“All players must arrive at 7:00 a.m.”", ctx:"¿Qué función expresa el modal?", o:["Obligación","Posibilidad","Consejo","Habilidad pasada"], a:0, why:"Must expresa una obligación fuerte."},
+  {t:"func", q:"“Could you repeat that, please?”", ctx:"¿Qué función expresa el modal?", o:["Petición cortés","Prohibición","Obligación","Posibilidad"], a:0, why:"Could you…? es una forma educada de pedir algo."},
+  {t:"fix", q:"Elige la oración correcta.", o:["He can play soccer.","He cans play soccer.","He can plays soccer.","He can to play soccer."], a:0, why:"Modal sin -s + verbo base sin to."},
+  {t:"fix", q:"Elige la oración correcta.", o:["You should study more.","You should to study more.","You shoulds study more.","You should studies more."], a:0, why:"Should + verbo base."},
+  {t:"fix", q:"Elige la oración correcta.", o:["Can you help me?","Do you can help me?","You can help me?","Can you helps me?"], a:0, why:"Pregunta: modal + sujeto + verbo base, sin do."},
+  {t:"fix", q:"Elige la oración correcta.", o:["She doesn't have to cook.","She don't have to cook.","She doesn't has to cook.","She mustn't to cook."], a:0, why:"Con she: doesn't + have to + verbo base."},
+  {t:"fix", q:"Elige la oración correcta.", o:["We mustn't touch the cables.","We mustn't to touch the cables.","We don't must touch the cables.","We mustn't touches the cables."], a:0, why:"Negativo: mustn't + verbo base."},
+  {t:"fix", q:"Elige la oración correcta.", o:["They might come later.","They might to come later.","They mights come later.","They might came later."], a:0, why:"Might + verbo base (come)."}
+];
+const MODES = {mix:"Ruta completa (mixto)", gap:"Completa la oración", func:"Identifica la función", fix:"Corrige el error"};
+const TYPE_LABEL = {gap:"Completa la oración", func:"Identifica la función", fix:"Corrige el error"};
+
+/* ---------- STORAGE ---------- */
+const KEY="modalroad.history.v1";
+function loadHist(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return []}}
+function saveHist(h){try{localStorage.setItem(KEY,JSON.stringify(h))}catch(e){}}
+let memHist=loadHist();
+
+/* ---------- HELPERS ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const strip=s=>s.replace(/<[^>]+>/g,"");
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function toast(msg){const t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
+function speak(text){try{const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast("Tu navegador no permite reproducir audio.")}}
+
+/* ---------- LEARN ---------- */
+let filter="all";
+function renderFilters(){
+  const f=$("#filters");
+  const items=[["all","Todas",null]].concat(Object.entries(FUNCS).map(([k,v])=>[k,v.label,v.color]));
+  f.innerHTML=items.map(([k,l,c])=>`<button class="chip" type="button" data-f="${k}" aria-pressed="${filter===k}">${c?`<span class="dot" style="background:${c}"></span>`:""}${l}</button>`).join("");
+  f.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderFilters();renderCards()});
+}
+function renderCards(){
+  const list=MODALS.filter(x=>filter==="all"||x.f===filter);
+  $("#cards").innerHTML=list.map(x=>`
+    <article class="mcard">
+      <div class="sign ${FUNCS[x.f].cls}"><b>${x.sign}</b></div>
+      <div style="min-width:0">
+        <span class="fn">${x.fn}</span>
+        <h3>${x.m}</h3>
+        <p class="es">${x.es}</p>
+        <ul>${x.ex.map(e=>`<li><button class="say" type="button" aria-label="Escuchar: ${esc(strip(e[0]))}" data-say="${esc(strip(e[0]))}">▶</button><span>${e[0]} <span class="note">· ${e[1]}</span></span></li>`).join("")}</ul>
+      </div>
+    </article>`).join("");
+  $("#cards").querySelectorAll(".say").forEach(b=>b.onclick=()=>speak(b.dataset.say));
+}
+
+/* ---------- GAME ---------- */
+let G=null;
+function renderSetup(){
+  const last=memHist[0]||{};
+  $("#stage").innerHTML=`
+    <span class="qtype">Nueva misión</span>
+    <h3>¡Prepárate para la ruta!</h3>
+    <p class="note">Escribe tus datos para identificar tu informe en PDF.</p>
+    <form class="setup" id="setup" novalidate>
+      <label for="p-name">Nombre y apellido *<input id="p-name" name="name" autocomplete="name" required value="${esc(last.name||"")}" placeholder="Ej.: Valentina Pérez"></label>
+      <label for="p-group">Curso o grupo<select id="p-group" name="group">${["8-1","8-2","Otro"].map(g=>`<option ${last.group===g?"selected":""}>${g}</option>`).join("")}</select></label>
+      <label for="p-mode">Tipo de reto *<select id="p-mode" name="mode">${Object.entries(MODES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></label>
+      <p class="note" id="setup-err" role="alert" hidden>Escribe tu nombre para comenzar.</p>
+      <button class="btn btn-primary" type="submit">¡Arrancar! →</button>
+      <p class="note">Tus datos quedan guardados únicamente en este navegador.</p>
+    </form>`;
+  $("#setup").addEventListener("submit",e=>{
+    e.preventDefault();
+    const name=$("#p-name").value.trim();
+    if(!name){$("#setup-err").hidden=false;$("#p-name").focus();return}
+    start(name,$("#p-group").value,$("#p-mode").value);
+  });
+}
+function start(name,group,mode){
+  let pool=mode==="mix"?BANK:BANK.filter(q=>q.t===mode);
+  let qs;
+  if(mode==="mix"){
+    const by=t=>shuffle(BANK.filter(q=>q.t===t));
+    qs=shuffle(by("gap").slice(0,4).concat(by("func").slice(0,3),by("fix").slice(0,3)));
+  } else qs=shuffle(pool).slice(0,10);
+  qs=qs.map(q=>{const order=shuffle(q.o.map((_,i)=>i));return Object.assign({},q,{o:order.map(i=>q.o[i]),a:order.indexOf(q.a)})});
+  G={name,group,mode,qs,i:0,score:0,answers:[],started:new Date()};
+  renderQ();
+}
+function renderQ(){
+  const q=G.qs[G.i], n=G.qs.length;
+  const text=q.t==="gap"?esc(q.q).replace("___",'<span class="gap">___</span>'):esc(q.q);
+  $("#stage").innerHTML=`
+    <div class="game">
+      <div class="hud"><span>RETO ${G.i+1} / ${n}</span><span>${esc(G.name)}</span><span>${G.score} PTS</span></div>
+      <div class="progress" aria-hidden="true"><i style="width:${(G.i/n)*100}%"></i></div>
+      <span class="qtype">${TYPE_LABEL[q.t]}</span>
+      <p class="qtext" id="qtext">${text}</p>
+      ${q.ctx?`<p class="qctx">${q.ctx}</p>`:""}
+      <div class="opts" role="group" aria-labelledby="qtext">${q.o.map((o,k)=>`<button class="opt" type="button" data-k="${k}"><kbd>${k+1}</kbd><span>${esc(o)}</span></button>`).join("")}</div>
+      <div id="fb" aria-live="polite"></div>
+    </div>`;
+  $("#stage").querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+}
+function answer(k){
+  const q=G.qs[G.i]; if(G.answers.length>G.i) return;
+  const ok=k===q.a; if(ok) G.score+=10;
+  G.answers.push({q:q.q,type:q.t,chosen:q.o[k],correct:q.o[q.a],ok});
+  const btns=$("#stage").querySelectorAll(".opt");
+  btns.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("right");else if(i===k)b.classList.add("wrong")});
+  const last=G.i===G.qs.length-1;
+  $("#fb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"¡Correcto! +10":"Casi. La respuesta es: "+esc(q.o[q.a])}</b><span>${esc(q.why)}</span></div>
+    <div style="margin-top:12px"><button class="btn btn-dark" id="next" type="button">${last?"Ver mi resultado →":"Siguiente reto →"}</button></div>`;
+  $("#stage").querySelector(".hud span:last-child").textContent=G.score+" PTS";
+  $("#next").focus({preventScroll:true});
+  $("#next").onclick=()=>{if(last)finish();else{G.i++;renderQ()}};
+}
+function finish(){
+  const rec={id:Date.now(),name:G.name,group:G.group,mode:G.mode,score:G.score,total:G.qs.length*10,date:new Date().toISOString(),answers:G.answers};
+  memHist.unshift(rec); saveHist(memHist); renderHistory();
+  const pct=rec.score/rec.total;
+  const msg=pct>=.9?"¡Conductor experto! Lees las señales del inglés sin problema.":pct>=.6?"¡Buen viaje! Repasa las señales donde fallaste.":"Vuelve a la Parada 1 y repasa el manual de señales.";
+  $("#stage").innerHTML=`
+    <div class="end">
+      <span class="qtype">Llegaste a la meta</span>
+      <div class="big">${rec.score}<small> / ${rec.total}</small></div>
+      <p>${msg}</p>
+      <div class="cta" style="margin-top:4px">
+        <button class="btn btn-primary" type="button" id="pdf">Descargar informe PDF</button>
+        <button class="btn btn-ghost" type="button" id="again">Jugar otra vez</button>
+      </div>
+    </div>`;
+  $("#pdf").onclick=()=>makePDF(rec);
+  $("#again").onclick=renderSetup;
+  G=null;
+}
+document.addEventListener("keydown",e=>{
+  if(!G||e.target.matches("input,select,textarea"))return;
+  const n=parseInt(e.key,10);
+  if(n>=1&&n<=4){const b=$("#stage").querySelectorAll(".opt")[n-1];if(b&&!b.disabled)b.click()}
+});
+
+/* ---------- RESULTS ---------- */
+function fmtDate(iso){try{return new Date(iso).toLocaleString("es-CO",{dateStyle:"short",timeStyle:"short"})}catch(e){return iso}}
+function renderHistory(){
+  const tb=$("#history");
+  $("#res-count").textContent=memHist.length?`${memHist.length} partida${memHist.length>1?"s":""} guardada${memHist.length>1?"s":""}`:"";
+  $("#clear-zone").hidden=!memHist.length;
+  if(!memHist.length){tb.innerHTML=`<tr><td colspan="6" class="empty">Todavía no hay partidas. Termina un reto en la Parada 2 y aparecerá aquí.</td></tr>`;return}
+  tb.innerHTML=memHist.map(r=>{const p=r.score/r.total;const c=p>=.9?"hi":p>=.6?"mid":"lo";
+    return `<tr><td>${esc(r.name)}</td><td>${esc(r.group)}</td><td>${esc(MODES[r.mode]||r.mode)}</td><td class="num"><span class="pill ${c}">${r.score}/${r.total}</span></td><td class="num">${fmtDate(r.date)}</td><td><button class="linkbtn" type="button" data-id="${r.id}">PDF</button></td></tr>`}).join("");
+  tb.querySelectorAll("button[data-id]").forEach(b=>b.onclick=()=>makePDF(memHist.find(r=>String(r.id)===b.dataset.id)));
+}
+function bindClear(){
+  $("#clear-btn").onclick=()=>{
+    const z=$("#clear-zone");
+    z.innerHTML=`<span class="confirm">¿Borrar todas las partidas? <button class="linkbtn" id="yes" type="button" style="color:var(--bad)">Sí, borrar</button><button class="linkbtn" id="no" type="button">Cancelar</button></span>`;
+    $("#yes").onclick=()=>{memHist=[];saveHist(memHist);restore();renderHistory();toast("Historial borrado")};
+    $("#no").onclick=restore;
+    function restore(){z.innerHTML=`<button class="linkbtn" id="clear-btn" type="button">Borrar historial</button>`;bindClear()}
+  };
+}
+
+/* ---------- PDF ---------- */
+function makePDF(r){
+  if(!r)return;
+  if(!window.jspdf){toast("No se pudo cargar el generador de PDF. Revisa tu conexión.");return}
+  const {jsPDF}=window.jspdf; const d=new jsPDF({unit:"mm",format:"a4"});
+  const W=210, M=16; let y=0;
+  d.setFillColor(27,35,45); d.rect(0,0,W,34,"F");
+  d.setFillColor(242,183,5); d.rect(0,34,W,2.5,"F");
+  d.setTextColor(255,255,255); d.setFont("helvetica","bold"); d.setFontSize(22); d.text("Modal Road",M,17);
+  d.setFont("helvetica","normal"); d.setFontSize(10); d.text("Informe de evaluación · Verbos modales · Inglés 8.º",M,25);
+  y=48; d.setTextColor(21,32,43); d.setFontSize(11);
+  const rows=[["Estudiante",r.name],["Curso",r.group],["Tipo de reto",MODES[r.mode]||r.mode],["Fecha",fmtDate(r.date)]];
+  rows.forEach(([k,v])=>{d.setFont("helvetica","bold");d.text(k+":",M,y);d.setFont("helvetica","normal");d.text(String(v),M+32,y);y+=7});
+  d.setFont("helvetica","bold"); d.setFontSize(30); d.text(`${r.score} / ${r.total}`,W-M,58,{align:"right"});
+  d.setFontSize(9); d.setFont("helvetica","normal"); d.text(`${r.answers.filter(a=>a.ok).length} de ${r.answers.length} respuestas correctas`,W-M,65,{align:"right"});
+  y+=6; d.setDrawColor(205,213,222); d.line(M,y,W-M,y); y+=8;
+  d.setFont("helvetica","bold"); d.setFontSize(12); d.text("Detalle de respuestas",M,y); y+=8;
+  r.answers.forEach((a,i)=>{
+    if(y>270){d.addPage();y=20}
+    d.setFontSize(10); d.setFont("helvetica","bold");
+    d.setTextColor(a.ok?31:200,a.ok?122:35,a.ok?77:44); d.text(a.ok?"OK":"X",M,y);
+    d.setTextColor(21,32,43);
+    const q=d.splitTextToSize(`${i+1}. ${a.q.replace(/[“”]/g,'"')}`,W-2*M-10); d.text(q,M+10,y); y+=q.length*5;
+    d.setFont("helvetica","normal"); d.setTextColor(86,99,115);
+    const line=a.ok?`Tu respuesta: ${a.chosen}`:`Tu respuesta: ${a.chosen}   ·   Correcta: ${a.correct}`;
+    const l2=d.splitTextToSize(line,W-2*M-10); d.text(l2,M+10,y); y+=l2.length*5+4;
+  });
+  d.setFontSize(8); d.setTextColor(140,150,160); d.text("Generado por el OVA Modal Road · I.E. Liceo Guillermo Valencia",M,290);
+  const file=`ModalRoad_${r.name.replace(/\s+/g,"_")}_${r.group}.pdf`;
+  try{d.save(file);toast("Informe descargado")}catch(e){toast("La descarga no está disponible en esta vista previa.")}
+}
+
+/* ---------- INIT ---------- */
+renderFilters(); renderCards(); renderSetup(); renderHistory(); bindClear();
+})();
+</script>
+
+</body>
+</html>
