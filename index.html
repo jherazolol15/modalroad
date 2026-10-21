@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#1b232d">
 <title>Modal Road</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="OVA de inglés para grado 8.º: aprende los verbos modales como señales de tránsito, juega y descarga tu informe en PDF.">
+<meta name="description" content="OVA de inglés para grado 8.º: can, must, have to y should como señales de tránsito. Juega 15 retos y descarga tu nota en PDF.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass:wght@400;600;800;900&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Overpass+Mono:wght@500;700&display=swap">
@@ -132,6 +132,15 @@ section.block{padding-block:72px}
 .say:hover{border-color:var(--fg)}
 @media (max-width:400px){.mcard{grid-template-columns:1fr}}
 
+.mcard .rtag{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tr{display:block;font-size:14px;font-style:italic;color:var(--muted)}
+.cnote{margin-top:12px;font-size:14px;padding:8px 10px;border-radius:6px;background:var(--surface-2)}
+.qtr{margin-top:6px;font-style:italic;color:var(--muted);font-size:16px}
+.versus{border:2px dashed var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;margin-bottom:14px}
+.vs-row{display:flex;gap:14px;align-items:center}
+.vs-row .sign{width:58px;height:58px;font-size:10px}
+.vs-row p{min-width:0}
+
 /* rules */
 .rules{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
 @media (max-width:820px){.rules{grid-template-columns:1fr}}
@@ -242,20 +251,20 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
       <div>
         <span class="tag">OVA · INGLÉS 8.º · NIVEL A2</span>
         <h1>Los modales son <em>señales</em> de tránsito.</h1>
-        <p class="lead">Cada verbo modal te indica algo: puedes avanzar, debes hacerlo, está prohibido o es mejor que lo hagas. Aprende a leer las señales del inglés.</p>
+        <p class="lead">Can, must, have to y should te indican algo: puedes hacerlo, debes hacerlo, está prohibido, no es necesario o es mejor que lo hagas. Aprende a leer las señales del inglés.</p>
         <div class="cta">
           <a class="btn btn-primary" href="#aprender">Empezar el recorrido →</a>
           <a class="btn btn-ghost" href="#jugar">Ir al reto</a>
         </div>
-        <div class="facts"><span>✓ 8 verbos modales</span><span>✓ 10 retos por partida</span><span>✓ Informe en PDF</span></div>
+        <div class="facts"><span>✓ Can · Must · Have to · Should</span><span>✓ 15 retos</span><span>✓ Nota de 0 a 5 en PDF</span></div>
       </div>
       <div class="signboard" aria-label="Ejemplos de señales">
-        <figure><div class="sign s-go"><b>CAN</b></div><figcaption>habilidad</figcaption></figure>
+        <figure><div class="sign s-go"><b>CAN</b></div><figcaption>habilidad · permiso</figcaption></figure>
         <figure><div class="sign s-must"><b>MUST</b></div><figcaption>obligación</figcaption></figure>
         <figure><div class="sign s-stop"><b>MUSTN'T</b></div><figcaption>prohibición</figcaption></figure>
-        <figure><div class="sign s-warn"><b>SHOULD</b></div><figcaption>consejo</figcaption></figure>
-        <figure><div class="sign s-info"><b>MIGHT</b></div><figcaption>posibilidad</figcaption></figure>
+        <figure><div class="sign s-must"><b>HAVE TO</b></div><figcaption>obligación externa</figcaption></figure>
         <figure><div class="sign s-none"><b>DON'T<br>HAVE TO</b></div><figcaption>no es necesario</figcaption></figure>
+        <figure><div class="sign s-warn"><b>SHOULD</b></div><figcaption>consejo</figcaption></figure>
       </div>
     </div>
     <div class="lane" aria-hidden="true"></div>
@@ -268,9 +277,9 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
         <h2 id="ruta-t">Tres paradas para dominar los modales</h2>
       </div>
       <div class="route">
-        <div class="route-step"><div class="km">KM 1</div><h3>Aprende</h3><p>Conoce cada modal, su función y ejemplos de la vida diaria. Escucha la pronunciación.</p><a href="#aprender">Ver las señales →</a></div>
-        <div class="route-step"><div class="km">KM 2</div><h3>Juega</h3><p>Completa oraciones, identifica funciones y corrige errores en 10 retos.</p><a href="#jugar">Comenzar el reto →</a></div>
-        <div class="route-step"><div class="km">KM 3</div><h3>Demuestra</h3><p>Revisa tus resultados y descarga tu informe en PDF para entregarlo.</p><a href="#resultados">Ver resultados →</a></div>
+        <div class="route-step"><div class="km">KM 1</div><h3>Aprende</h3><p>Conoce can, must, have to y should en afirmativo, negativo y pregunta. Escucha la pronunciación.</p><a href="#aprender">Ver las señales →</a></div>
+        <div class="route-step"><div class="km">KM 2</div><h3>Juega</h3><p>Completa oraciones, identifica funciones y corrige errores en 15 retos.</p><a href="#jugar">Comenzar el reto →</a></div>
+        <div class="route-step"><div class="km">KM 3</div><h3>Demuestra</h3><p>Obtén tu nota de 0 a 5 y descarga tu informe en PDF para entregarlo.</p><a href="#resultados">Ver resultados →</a></div>
       </div>
     </div>
   </section>
@@ -280,9 +289,9 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
       <div class="sec-head">
         <span class="stop-label"><i></i>Parada 1 · Learn</span>
         <h2 id="aprender-t">El manual de señales</h2>
-        <p>Filtra por función. Toca ▶ para escuchar cada ejemplo en inglés.</p>
+        <p>Cada señal en sus tres formas: afirmativa, negativa y pregunta. Toca ▶ para escuchar el ejemplo en inglés.</p>
       </div>
-      <div class="legend" id="filters" role="group" aria-label="Filtrar por función"></div>
+      <div class="legend" id="filters" role="group" aria-label="Filtrar por modal"></div>
       <div class="cards" id="cards"></div>
 
       <div class="rules">
@@ -298,6 +307,11 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
           <p>Los modales no cambian con <b>he / she / it</b>, no llevan <b>to</b> después (excepto <b>have to</b>) y el verbo que sigue va en forma base.</p>
         </div>
         <div class="errors">
+          <div class="versus">
+            <span class="eyebrow">¡Ojo! No significan lo mismo</span>
+            <div class="vs-row"><div class="sign s-stop"><b>MUSTN'T</b></div><p><b>You mustn't run.</b><span class="tr">No debes correr. Está prohibido.</span></p></div>
+            <div class="vs-row"><div class="sign s-none"><b>DON'T<br>HAVE TO</b></div><p><b>You don't have to run.</b><span class="tr">No tienes que correr. No es necesario, pero puedes.</span></p></div>
+          </div>
           <h3>Errores frecuentes en 8.º</h3>
           <div class="err"><div class="no">She cans swim.</div><div class="yes">She can swim.</div><div class="why">Los modales no llevan -s en tercera persona.</div></div>
           <div class="err"><div class="no">You must to study.</div><div class="yes">You must study.</div><div class="why">Después del modal no va "to".</div></div>
@@ -314,20 +328,20 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
       <div class="sec-head">
         <span class="stop-label"><i></i>Parada 2 · Play</span>
         <h2 id="jugar-t">El reto de las señales</h2>
-        <p>Cada acierto vale 10 puntos. No hay límite de tiempo: lee con calma.</p>
+        <p>Son 15 retos y tu nota va de 0 a 5. No hay límite de tiempo: lee con calma.</p>
       </div>
       <div class="play-grid">
         <div class="panel" id="stage"></div>
         <aside class="panel how">
           <h3>¿Cómo se juega?</h3>
           <ol>
-            <li>Escribe tu nombre y elige el tipo de reto.</li>
-            <li>Lee la situación o la oración.</li>
+            <li>Escribe tu nombre y tu curso.</li>
+            <li>Lee la oración en inglés. Algunas traen una pequeña traducción entre paréntesis.</li>
             <li>Elige una de las 4 opciones (también puedes usar las teclas 1-4).</li>
             <li>Lee la explicación y continúa.</li>
             <li>Al final, descarga tu informe en PDF.</li>
           </ol>
-          <div class="score"><div><b>10</b><span>retos</span></div><div><b>100</b><span>puntos</span></div><div><b>3</b><span>tipos de reto</span></div></div>
+          <div class="score"><div><b>15</b><span>retos</span></div><div><b>0-5</b><span>nota final</span></div><div><b>3</b><span>tipos de reto</span></div></div>
         </aside>
       </div>
     </div>
@@ -345,7 +359,7 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
         <span id="clear-zone"><button class="linkbtn" id="clear-btn" type="button">Borrar historial</button></span>
       </div>
       <div class="table-wrap"><table>
-        <thead><tr><th>Estudiante</th><th>Curso</th><th>Reto</th><th>Puntaje</th><th>Fecha</th><th>Informe</th></tr></thead>
+        <thead><tr><th>Estudiante</th><th>Curso</th><th>Aciertos</th><th>Nota</th><th>Fecha</th><th>Informe</th></tr></thead>
         <tbody id="history"></tbody>
       </table></div>
       <p class="teacher-note"><b>Para el docente:</b> los resultados se guardan solo en el navegador de cada dispositivo. Si los estudiantes usan equipos distintos, cada uno debe descargar su PDF y entregarlo por el medio acordado (correo, Classroom, WhatsApp).</p>
@@ -365,17 +379,19 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
             <dt>Área</dt><dd>Humanidades: Lengua extranjera (Inglés)</dd>
             <dt>Grado</dt><dd>Octavo (8.º)</dd>
             <dt>Nivel</dt><dd>A2 (MCER)</dd>
-            <dt>Tema</dt><dd>Modal verbs: can, could, must, mustn't, have to, don't have to, should, may / might</dd>
+            <dt>Tema</dt><dd>Modal verbs: can, must, have to y should (afirmativa, negativa e interrogativa)</dd>
             <dt>Duración</dt><dd>2 sesiones de 55 min</dd>
+            <dt>Evaluación</dt><dd>15 preguntas, nota de 0.0 a 5.0</dd>
             <dt>Autor</dt><dd>Juan Pablo Herazo Sibaja</dd>
           </dl>
         </div>
         <div class="panel">
           <h3>Objetivo de aprendizaje</h3>
-          <p style="margin-top:10px;font-size:15px">Usar verbos modales para expresar habilidad, permiso, obligación, prohibición, ausencia de obligación, consejo y posibilidad en situaciones cotidianas del colegio y la comunidad.</p>
+          <p style="margin-top:10px;font-size:15px">Usar can, must, have to y should para expresar habilidad, permiso, obligación, prohibición, ausencia de obligación y consejo en situaciones cotidianas del colegio y la comunidad.</p>
           <ul>
             <li>Identifica la función comunicativa de cada modal.</li>
             <li>Construye oraciones afirmativas, negativas e interrogativas con modal + verbo base.</li>
+            <li>Diferencia mustn't (prohibición) de don't have to (no es necesario).</li>
             <li>Corrige errores frecuentes de forma (-s, to, do).</li>
           </ul>
         </div>
@@ -385,7 +401,7 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
             <li><b>Exploración:</b> la metáfora de las señales de tránsito activa saberes previos.</li>
             <li><b>Estructuración:</b> manual de señales, regla de oro y errores frecuentes.</li>
             <li><b>Práctica:</b> reto de 10 preguntas con retroalimentación inmediata.</li>
-            <li><b>Evaluación:</b> informe PDF con puntaje y respuestas.</li>
+            <li><b>Evaluación:</b> informe PDF con nota de 0 a 5 y desempeño (Bajo 0.0-2.9 · Básico 3.0-3.9 · Alto 4.0-4.5 · Superior 4.6-5.0).</li>
           </ul>
         </div>
         <div class="panel">
@@ -413,69 +429,91 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
 (function(){
 "use strict";
 /* ---------- DATA ---------- */
-const FUNCS = {
-  go:   {label:"Habilidad / permiso", cls:"s-go",   color:"var(--go)"},
-  must: {label:"Obligación",          cls:"s-must", color:"var(--must)"},
-  stop: {label:"Prohibición",         cls:"s-stop", color:"var(--stop)"},
-  none: {label:"No es necesario",     cls:"s-none", color:"var(--none)"},
-  warn: {label:"Consejo",             cls:"s-warn", color:"var(--warn)"},
-  info: {label:"Posibilidad",         cls:"s-info", color:"var(--info)"}
-};
 const MODALS = [
-  {m:"can", f:"go", sign:"CAN", fn:"Habilidad y permiso", es:"poder / saber hacer algo ahora.",
-   ex:[["I <b>can</b> speak two languages.","Habilidad"],["<b>Can</b> I go to the bathroom, please?","Permiso"],["My brother <b>can't</b> swim.","Negativo: can't"]]},
-  {m:"could", f:"go", sign:"COULD", fn:"Habilidad pasada y petición cortés", es:"podía / ¿podrías…?",
-   ex:[["When I was six, I <b>could</b> ride a bike.","Habilidad en el pasado"],["<b>Could</b> you open the window, please?","Petición cortés"]]},
-  {m:"must", f:"must", sign:"MUST", fn:"Obligación fuerte", es:"deber (una regla o algo que tú mismo consideras necesario).",
-   ex:[["Students <b>must</b> wear the school uniform.","Regla del colegio"],["I <b>must</b> finish this project today.","Obligación personal"]]},
-  {m:"have to", f:"must", sign:"HAVE TO", fn:"Obligación externa", es:"tener que (alguien o algo te lo exige).",
-   ex:[["I <b>have to</b> do my homework every day.","Rutina obligatoria"],["She <b>has to</b> take the bus at 6:00.","Cambia con he/she/it"]]},
-  {m:"mustn't", f:"stop", sign:"MUSTN'T", fn:"Prohibición", es:"no se debe / está prohibido.",
-   ex:[["You <b>mustn't</b> use your phone during the exam.","Regla"],["We <b>mustn't</b> throw garbage in the river.","Prohibición"]]},
-  {m:"don't have to", f:"none", sign:"DON'T<br>HAVE TO", fn:"Ausencia de obligación", es:"no es necesario (pero puedes hacerlo).",
-   ex:[["We <b>don't have to</b> go to school on Sunday.","No es necesario"],["He <b>doesn't have to</b> wear a tie.","Con he/she/it: doesn't"]]},
-  {m:"should", f:"warn", sign:"SHOULD", fn:"Consejo y recomendación", es:"debería / es buena idea.",
-   ex:[["You <b>should</b> drink water after training.","Consejo"],["You <b>shouldn't</b> sleep late before a test.","Negativo: shouldn't"]]},
-  {m:"may / might", f:"info", sign:"MIGHT", fn:"Posibilidad", es:"puede que / quizás.",
-   ex:[["It <b>might</b> rain this afternoon.","Posibilidad"],["I <b>may</b> visit my grandma on Saturday.","Plan no seguro"]]}
+  {m:"can", cls:"s-go", sign:"CAN", fn:"Habilidad y permiso", es:"poder / saber hacer algo.",
+   rows:[
+    ["+","I <b>can</b> speak two languages.","Puedo hablar dos idiomas."],
+    ["−","My brother <b>can't</b> swim.","Mi hermano no sabe nadar."],
+    ["?","<b>Can</b> I go to the bathroom, please?","¿Puedo ir al baño, por favor?"]]},
+  {m:"must", cls:"s-must", sign:"MUST", fn:"Obligación fuerte · prohibición", es:"deber (una regla). En negativo: está prohibido.",
+   rows:[
+    ["+","Students <b>must</b> wear the school uniform.","Los estudiantes deben usar el uniforme."],
+    ["−","You <b>mustn't</b> use your phone in the exam.","No debes usar el celular en el examen (prohibido)."],
+    ["?","<b>Must</b> I sign here?","¿Debo firmar aquí?"]],
+   note:"La pregunta con must es formal. En la vida diaria se usa más: Do I have to…?"},
+  {m:"have to", cls:"s-must", sign:"HAVE TO", fn:"Obligación externa", es:"tener que (alguien o algo te lo exige).",
+   rows:[
+    ["+","She <b>has to</b> take the bus at 6:00.","Ella tiene que tomar el bus a las 6:00."],
+    ["−","We <b>don't have to</b> go to school on Sunday.","No tenemos que ir al colegio el domingo (no es necesario)."],
+    ["?","<b>Do</b> you <b>have to</b> wear a uniform?","¿Tienes que usar uniforme?"]],
+   note:"Con he / she / it: has to · doesn't have to · Does … have to?"},
+  {m:"should", cls:"s-warn", sign:"SHOULD", fn:"Consejo y recomendación", es:"debería / es buena idea.",
+   rows:[
+    ["+","You <b>should</b> drink water after training.","Deberías tomar agua después de entrenar."],
+    ["−","You <b>shouldn't</b> sleep late before a test.","No deberías acostarte tarde antes de un examen."],
+    ["?","<b>Should</b> I study tonight?","¿Debería estudiar esta noche?"]]}
 ];
+const ROWLABEL={"+":"Afirmativa","−":"Negativa","?":"Pregunta"};
 
-/* question types: gap (complete), func (identify function), fix (correct sentence) */
+/* t: gap | func | fix · a: index of correct option before shuffling · tr: short Spanish help */
 const BANK = [
-  {t:"gap", q:"I ___ play the guitar. I practice every weekend.", o:["can","must","mustn't","should"], a:0, why:"Hablamos de una habilidad: can."},
-  {t:"gap", q:"Students ___ run in the hallways. It's dangerous!", o:["mustn't","don't have to","can","might"], a:0, why:"Es una regla que prohíbe algo: mustn't."},
-  {t:"gap", q:"You have a fever. You ___ see a doctor.", o:["should","mustn't","could","don't have to"], a:0, why:"Es un consejo: should."},
-  {t:"gap", q:"Tomorrow is a holiday. We ___ wake up early.", o:["don't have to","mustn't","can't","should"], a:0, why:"No es necesario madrugar, pero puedes hacerlo: don't have to."},
-  {t:"gap", q:"Look at those dark clouds! It ___ rain soon.", o:["might","must","can","has to"], a:0, why:"Es una posibilidad, no una certeza: might."},
-  {t:"gap", q:"When my grandpa was young, he ___ run very fast.", o:["could","can","should","must"], a:0, why:"Habilidad en el pasado: could."},
-  {t:"gap", q:"___ you help me with my homework, please?", o:["Could","Must","Should","Have"], a:0, why:"Petición cortés: Could you…?"},
-  {t:"gap", q:"My mom ___ work on Saturdays. Her boss says so.", o:["has to","have to","must to","shoulds"], a:0, why:"Obligación externa con she: has to."},
-  {t:"gap", q:"Drivers ___ stop at a red light.", o:["must","might","could","don't have to"], a:0, why:"Es una norma obligatoria: must."},
-  {t:"gap", q:"You ___ eat so much candy. It's bad for your teeth.", o:["shouldn't","don't have to","can","might"], a:0, why:"Consejo negativo: shouldn't."},
-  {t:"gap", q:"___ I borrow your pencil?", o:["Can","Must","Should","Have to"], a:0, why:"Pedir permiso: Can I…?"},
-  {t:"gap", q:"I'm not sure. I ___ go to the party on Friday.", o:["may","must","have to","mustn't"], a:0, why:"Plan posible pero no seguro: may."},
-  {t:"func", q:"“You mustn't feed the animals at the zoo.”", ctx:"¿Qué función expresa el modal?", o:["Prohibición","Consejo","Habilidad","Posibilidad"], a:0, why:"Mustn't indica que algo está prohibido."},
-  {t:"func", q:"“You should go to bed early.”", ctx:"¿Qué función expresa el modal?", o:["Consejo","Obligación","Prohibición","Permiso"], a:0, why:"Should da una recomendación."},
-  {t:"func", q:"“She can speak Portuguese.”", ctx:"¿Qué función expresa el modal?", o:["Habilidad","Prohibición","Obligación","Posibilidad"], a:0, why:"Can expresa lo que alguien sabe hacer."},
-  {t:"func", q:"“We don't have to bring lunch today.”", ctx:"¿Qué función expresa el modal?", o:["No es necesario","Prohibición","Consejo","Habilidad"], a:0, why:"Don't have to: no es obligatorio, pero no está prohibido."},
-  {t:"func", q:"“It might be sunny tomorrow.”", ctx:"¿Qué función expresa el modal?", o:["Posibilidad","Obligación","Permiso","Consejo"], a:0, why:"Might indica que algo es posible."},
-  {t:"func", q:"“All players must arrive at 7:00 a.m.”", ctx:"¿Qué función expresa el modal?", o:["Obligación","Posibilidad","Consejo","Habilidad pasada"], a:0, why:"Must expresa una obligación fuerte."},
-  {t:"func", q:"“Could you repeat that, please?”", ctx:"¿Qué función expresa el modal?", o:["Petición cortés","Prohibición","Obligación","Posibilidad"], a:0, why:"Could you…? es una forma educada de pedir algo."},
-  {t:"fix", q:"Elige la oración correcta.", o:["He can play soccer.","He cans play soccer.","He can plays soccer.","He can to play soccer."], a:0, why:"Modal sin -s + verbo base sin to."},
+  {t:"gap", q:"I ___ swim very well. I practice every weekend.", tr:"Practico todos los fines de semana.", o:["can","must","mustn't","should"], a:0, why:"Hablamos de una habilidad: can."},
+  {t:"gap", q:"Students ___ run in the hallways. It's dangerous!", tr:"¡Es peligroso!", o:["mustn't","don't have to","can","should"], a:0, why:"Es una regla que prohíbe algo: mustn't."},
+  {t:"gap", q:"You have a fever. You ___ see a doctor.", tr:"Tienes fiebre.", o:["should","mustn't","can't","don't have to"], a:0, why:"Es un consejo: should."},
+  {t:"gap", q:"Tomorrow is a holiday. We ___ wake up early.", tr:"Mañana es festivo.", o:["don't have to","mustn't","can't","should"], a:0, why:"No es necesario madrugar, pero tampoco está prohibido: don't have to."},
+  {t:"gap", q:"My brother is only two. He ___ read yet.", tr:"Mi hermano solo tiene dos años.", o:["can't","mustn't","shouldn't","doesn't have to"], a:0, why:"Falta de habilidad: can't."},
+  {t:"gap", q:"___ I borrow your pencil, please?", o:["Can","Must","Should","Have"], a:0, why:"Para pedir permiso usamos Can I…?"},
+  {t:"gap", q:"My mom ___ work on Saturdays. Her boss says so.", tr:"Su jefe lo dice.", o:["has to","have to","must to","shoulds"], a:0, why:"Obligación externa con she: has to."},
+  {t:"gap", q:"Drivers ___ stop at a red light.", tr:"Los conductores… en el semáforo en rojo.", o:["must","can't","don't have to","shouldn't"], a:0, why:"Es una norma obligatoria: must."},
+  {t:"gap", q:"You ___ eat so much candy. It's bad for your teeth.", tr:"Es malo para tus dientes.", o:["shouldn't","should","have to","can"], a:0, why:"Consejo negativo: shouldn't."},
+  {t:"gap", q:"___ you speak English? — Yes, a little.", o:["Can","Must","Should","Do"], a:0, why:"Preguntamos por una habilidad: Can you…?"},
+  {t:"gap", q:"___ we have to wear the uniform tomorrow?", tr:"¿…llevar el uniforme mañana?", o:["Do","Does","Must","Can"], a:0, why:"Pregunta con have to: Do + we + have to…?"},
+  {t:"gap", q:"I'm very tired. ___ I go to bed early?", tr:"Estoy muy cansado.", o:["Should","Do","Have","Does"], a:0, why:"Pedimos un consejo: Should I…?"},
+  {t:"gap", q:"She ___ wear glasses. She can see very well.", tr:"Ella ve muy bien.", o:["doesn't have to","don't have to","mustn't","can"], a:0, why:"No es necesario, y con she se usa doesn't have to."},
+  {t:"gap", q:"You ___ use your phone during the exam.", o:["mustn't","don't have to","should","can"], a:0, why:"Está prohibido: mustn't."},
+  {t:"gap", q:"He ___ finish his homework before he plays video games.", tr:"Sus papás se lo exigen.", o:["has to","have to","can't","shouldn't"], a:0, why:"Obligación externa con he: has to."},
+  {t:"gap", q:"___ she have to clean her room every day?", o:["Does","Do","Has","Must"], a:0, why:"Pregunta con she: Does + she + have to…?"},
+
+  {t:"func", q:"“You mustn't feed the animals at the zoo.”", tr:"No debes alimentar a los animales del zoológico.", ctx:"¿Qué expresa el modal?", o:["Prohibición","Consejo","Habilidad","No es necesario"], a:0, why:"Mustn't indica que algo está prohibido."},
+  {t:"func", q:"“You should go to bed early.”", ctx:"¿Qué expresa el modal?", o:["Consejo","Obligación","Prohibición","Permiso"], a:0, why:"Should da una recomendación."},
+  {t:"func", q:"“She can speak Portuguese.”", tr:"Ella habla portugués.", ctx:"¿Qué expresa el modal?", o:["Habilidad","Prohibición","Obligación","Consejo"], a:0, why:"Can expresa lo que alguien sabe hacer."},
+  {t:"func", q:"“We don't have to bring lunch today.”", tr:"…traer almuerzo hoy.", ctx:"¿Qué expresa el modal?", o:["No es necesario","Prohibición","Consejo","Habilidad"], a:0, why:"Don't have to: no es obligatorio, pero no está prohibido."},
+  {t:"func", q:"“All players must arrive at 7:00 a.m.”", ctx:"¿Qué expresa el modal?", o:["Obligación","Permiso","Consejo","No es necesario"], a:0, why:"Must expresa una obligación fuerte."},
+  {t:"func", q:"“Can I open the window?”", tr:"¿…abrir la ventana?", ctx:"¿Qué expresa el modal?", o:["Permiso","Obligación","Prohibición","Consejo"], a:0, why:"Can I…? sirve para pedir permiso."},
+  {t:"func", q:"“I have to clean my room every Saturday.”", ctx:"¿Qué expresa el modal?", o:["Obligación","Habilidad","Consejo","Permiso"], a:0, why:"Have to expresa una obligación."},
+  {t:"func", q:"“You shouldn't drink soda before training.”", tr:"…gaseosa antes de entrenar.", ctx:"¿Qué expresa el modal?", o:["Consejo","Prohibición","Habilidad","No es necesario"], a:0, why:"Shouldn't es un consejo negativo, no una prohibición."},
+  {t:"func", q:"“My dog can't swim.”", ctx:"¿Qué expresa el modal?", o:["Habilidad (negativa)","Prohibición","Consejo","Obligación"], a:0, why:"Can't indica que no tiene la habilidad."},
+
+  {t:"fix", q:"Elige la oración correcta.", tr:"Él sabe jugar fútbol.", o:["He can play soccer.","He cans play soccer.","He can plays soccer.","He can to play soccer."], a:0, why:"Modal sin -s + verbo base sin to."},
   {t:"fix", q:"Elige la oración correcta.", o:["You should study more.","You should to study more.","You shoulds study more.","You should studies more."], a:0, why:"Should + verbo base."},
-  {t:"fix", q:"Elige la oración correcta.", o:["Can you help me?","Do you can help me?","You can help me?","Can you helps me?"], a:0, why:"Pregunta: modal + sujeto + verbo base, sin do."},
+  {t:"fix", q:"Elige la pregunta correcta.", tr:"¿Me puedes ayudar?", o:["Can you help me?","Do you can help me?","You can help me?","Can you helps me?"], a:0, why:"Pregunta: modal + sujeto + verbo base, sin do."},
   {t:"fix", q:"Elige la oración correcta.", o:["She doesn't have to cook.","She don't have to cook.","She doesn't has to cook.","She mustn't to cook."], a:0, why:"Con she: doesn't + have to + verbo base."},
-  {t:"fix", q:"Elige la oración correcta.", o:["We mustn't touch the cables.","We mustn't to touch the cables.","We don't must touch the cables.","We mustn't touches the cables."], a:0, why:"Negativo: mustn't + verbo base."},
-  {t:"fix", q:"Elige la oración correcta.", o:["They might come later.","They might to come later.","They mights come later.","They might came later."], a:0, why:"Might + verbo base (come)."}
+  {t:"fix", q:"Elige la oración correcta.", tr:"No debemos tocar los cables.", o:["We mustn't touch the cables.","We mustn't to touch the cables.","We don't must touch the cables.","We mustn't touches the cables."], a:0, why:"Negativo: mustn't + verbo base."},
+  {t:"fix", q:"Elige la pregunta correcta.", tr:"¿Él tiene que trabajar hoy?", o:["Does he have to work today?","Has he to work today?","Does he has to work today?","Do he have to work today?"], a:0, why:"Does + he + have to (sin -s) + verbo base."},
+  {t:"fix", q:"Elige la pregunta correcta.", o:["Should I call my mom?","Do I should call my mom?","Should I to call my mom?","Should I calls my mom?"], a:0, why:"Should + sujeto + verbo base."},
+  {t:"fix", q:"Elige la oración correcta.", tr:"No tengo que usar corbata.", o:["I don't have to wear a tie.","I haven't to wear a tie.","I don't must wear a tie.","I doesn't have to wear a tie."], a:0, why:"Negativo de have to: don't have to."},
+  {t:"fix", q:"Elige la oración correcta.", o:["They can't come to the party.","They don't can come to the party.","They can't to come to the party.","They can't comes to the party."], a:0, why:"Negativo: can't + verbo base, sin do."}
 ];
-const MODES = {mix:"Ruta completa (mixto)", gap:"Completa la oración", func:"Identifica la función", fix:"Corrige el error"};
+const MIX={gap:7, func:4, fix:4}; /* 15 questions */
 const TYPE_LABEL = {gap:"Completa la oración", func:"Identifica la función", fix:"Corrige el error"};
+
+/* ---------- GRADING (escala 0 a 5) ---------- */
+function grade(correct,n){return Math.round((correct/n)*50)/10}
+function level(g){return g>=4.6?"Superior":g>=4?"Alto":g>=3?"Básico":"Bajo"}
+function levelCls(g){return g>=4?"hi":g>=3?"mid":"lo"}
+const SCALE_TXT="Escala: Bajo 0.0-2.9 · Básico 3.0-3.9 · Alto 4.0-4.5 · Superior 4.6-5.0";
+/* normalise records saved by the first version (score/total in points) */
+function norm(r){
+  const n=r.n||(r.total?r.total/10:r.answers.length);
+  const c=r.correct!=null?r.correct:(r.score!=null?r.score/10:r.answers.filter(a=>a.ok).length);
+  return Object.assign({},r,{n,correct:c,grade:r.grade!=null?r.grade:grade(c,n)});
+}
 
 /* ---------- STORAGE ---------- */
 const KEY="modalroad.history.v1";
 function loadHist(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return []}}
 function saveHist(h){try{localStorage.setItem(KEY,JSON.stringify(h))}catch(e){}}
-let memHist=loadHist();
+let memHist=loadHist().map(norm);
 
 /* ---------- HELPERS ---------- */
 const $=s=>document.querySelector(s);
@@ -484,25 +522,27 @@ const strip=s=>s.replace(/<[^>]+>/g,"");
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function toast(msg){const t=document.createElement("div");t.className="toast";t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2600)}
 function speak(text){try{const u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){toast("Tu navegador no permite reproducir audio.")}}
+const g1=x=>x.toFixed(1);
 
 /* ---------- LEARN ---------- */
 let filter="all";
 function renderFilters(){
   const f=$("#filters");
-  const items=[["all","Todas",null]].concat(Object.entries(FUNCS).map(([k,v])=>[k,v.label,v.color]));
-  f.innerHTML=items.map(([k,l,c])=>`<button class="chip" type="button" data-f="${k}" aria-pressed="${filter===k}">${c?`<span class="dot" style="background:${c}"></span>`:""}${l}</button>`).join("");
+  const items=[["all","Todos"]].concat(MODALS.map(x=>[x.m,x.m]));
+  f.innerHTML=items.map(([k,l])=>`<button class="chip" type="button" data-f="${k}" aria-pressed="${filter===k}">${l}</button>`).join("");
   f.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filter=b.dataset.f;renderFilters();renderCards()});
 }
 function renderCards(){
-  const list=MODALS.filter(x=>filter==="all"||x.f===filter);
+  const list=MODALS.filter(x=>filter==="all"||x.m===filter);
   $("#cards").innerHTML=list.map(x=>`
     <article class="mcard">
-      <div class="sign ${FUNCS[x.f].cls}"><b>${x.sign}</b></div>
+      <div class="sign ${x.cls}"><b>${x.sign}</b></div>
       <div style="min-width:0">
         <span class="fn">${x.fn}</span>
         <h3>${x.m}</h3>
         <p class="es">${x.es}</p>
-        <ul>${x.ex.map(e=>`<li><button class="say" type="button" aria-label="Escuchar: ${esc(strip(e[0]))}" data-say="${esc(strip(e[0]))}">▶</button><span>${e[0]} <span class="note">· ${e[1]}</span></span></li>`).join("")}</ul>
+        <ul>${x.rows.map(r=>`<li><button class="say" type="button" aria-label="Escuchar: ${esc(strip(r[1]))}" data-say="${esc(strip(r[1]))}">▶</button><span><span class="rtag">${ROWLABEL[r[0]]}</span><br>${r[1]}<span class="tr">${r[2]}</span></span></li>`).join("")}</ul>
+        ${x.note?`<p class="cnote">${x.note}</p>`:""}
       </div>
     </article>`).join("");
   $("#cards").querySelectorAll(".say").forEach(b=>b.onclick=()=>speak(b.dataset.say));
@@ -519,7 +559,6 @@ function renderSetup(){
     <form class="setup" id="setup" novalidate>
       <label for="p-name">Nombre y apellido *<input id="p-name" name="name" autocomplete="name" required value="${esc(last.name||"")}" placeholder="Ej.: Valentina Pérez"></label>
       <label for="p-group">Curso o grupo<select id="p-group" name="group">${["8-1","8-2","Otro"].map(g=>`<option ${last.group===g?"selected":""}>${g}</option>`).join("")}</select></label>
-      <label for="p-mode">Tipo de reto *<select id="p-mode" name="mode">${Object.entries(MODES).map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></label>
       <p class="note" id="setup-err" role="alert" hidden>Escribe tu nombre para comenzar.</p>
       <button class="btn btn-primary" type="submit">¡Arrancar! →</button>
       <p class="note">Tus datos quedan guardados únicamente en este navegador.</p>
@@ -528,18 +567,14 @@ function renderSetup(){
     e.preventDefault();
     const name=$("#p-name").value.trim();
     if(!name){$("#setup-err").hidden=false;$("#p-name").focus();return}
-    start(name,$("#p-group").value,$("#p-mode").value);
+    start(name,$("#p-group").value);
   });
 }
-function start(name,group,mode){
-  let pool=mode==="mix"?BANK:BANK.filter(q=>q.t===mode);
-  let qs;
-  if(mode==="mix"){
-    const by=t=>shuffle(BANK.filter(q=>q.t===t));
-    qs=shuffle(by("gap").slice(0,4).concat(by("func").slice(0,3),by("fix").slice(0,3)));
-  } else qs=shuffle(pool).slice(0,10);
-  qs=qs.map(q=>{const order=shuffle(q.o.map((_,i)=>i));return Object.assign({},q,{o:order.map(i=>q.o[i]),a:order.indexOf(q.a)})});
-  G={name,group,mode,qs,i:0,score:0,answers:[],started:new Date()};
+function start(name,group){
+  let qs=[];
+  Object.entries(MIX).forEach(([t,k])=>{qs=qs.concat(shuffle(BANK.filter(q=>q.t===t)).slice(0,k))});
+  qs=shuffle(qs).map(q=>{const order=shuffle(q.o.map((_,i)=>i));return Object.assign({},q,{o:order.map(i=>q.o[i]),a:order.indexOf(q.a)})});
+  G={name,group,qs,i:0,correct:0,answers:[]};
   renderQ();
 }
 function renderQ(){
@@ -547,10 +582,10 @@ function renderQ(){
   const text=q.t==="gap"?esc(q.q).replace("___",'<span class="gap">___</span>'):esc(q.q);
   $("#stage").innerHTML=`
     <div class="game">
-      <div class="hud"><span>RETO ${G.i+1} / ${n}</span><span>${esc(G.name)}</span><span>${G.score} PTS</span></div>
+      <div class="hud"><span>RETO ${G.i+1} / ${n}</span><span>${esc(G.name)}</span><span id="hits">${G.correct} ACIERTOS</span></div>
       <div class="progress" aria-hidden="true"><i style="width:${(G.i/n)*100}%"></i></div>
       <span class="qtype">${TYPE_LABEL[q.t]}</span>
-      <p class="qtext" id="qtext">${text}</p>
+      <div><p class="qtext" id="qtext">${text}</p>${q.tr?`<p class="qtr">(${esc(q.tr)})</p>`:""}</div>
       ${q.ctx?`<p class="qctx">${q.ctx}</p>`:""}
       <div class="opts" role="group" aria-labelledby="qtext">${q.o.map((o,k)=>`<button class="opt" type="button" data-k="${k}"><kbd>${k+1}</kbd><span>${esc(o)}</span></button>`).join("")}</div>
       <div id="fb" aria-live="polite"></div>
@@ -559,26 +594,26 @@ function renderQ(){
 }
 function answer(k){
   const q=G.qs[G.i]; if(G.answers.length>G.i) return;
-  const ok=k===q.a; if(ok) G.score+=10;
+  const ok=k===q.a; if(ok) G.correct++;
   G.answers.push({q:q.q,type:q.t,chosen:q.o[k],correct:q.o[q.a],ok});
-  const btns=$("#stage").querySelectorAll(".opt");
-  btns.forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("right");else if(i===k)b.classList.add("wrong")});
+  $("#stage").querySelectorAll(".opt").forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("right");else if(i===k)b.classList.add("wrong")});
   const last=G.i===G.qs.length-1;
-  $("#fb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"¡Correcto! +10":"Casi. La respuesta es: "+esc(q.o[q.a])}</b><span>${esc(q.why)}</span></div>
-    <div style="margin-top:12px"><button class="btn btn-dark" id="next" type="button">${last?"Ver mi resultado →":"Siguiente reto →"}</button></div>`;
-  $("#stage").querySelector(".hud span:last-child").textContent=G.score+" PTS";
+  $("#fb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"¡Correcto!":"Casi. La respuesta es: "+esc(q.o[q.a])}</b><span>${esc(q.why)}</span></div>
+    <div style="margin-top:12px"><button class="btn btn-dark" id="next" type="button">${last?"Ver mi nota →":"Siguiente reto →"}</button></div>`;
+  $("#hits").textContent=G.correct+" ACIERTOS";
   $("#next").focus({preventScroll:true});
   $("#next").onclick=()=>{if(last)finish();else{G.i++;renderQ()}};
 }
 function finish(){
-  const rec={id:Date.now(),name:G.name,group:G.group,mode:G.mode,score:G.score,total:G.qs.length*10,date:new Date().toISOString(),answers:G.answers};
+  const n=G.qs.length, gr=grade(G.correct,n);
+  const rec={id:Date.now(),name:G.name,group:G.group,correct:G.correct,n,grade:gr,date:new Date().toISOString(),answers:G.answers};
   memHist.unshift(rec); saveHist(memHist); renderHistory();
-  const pct=rec.score/rec.total;
-  const msg=pct>=.9?"¡Conductor experto! Lees las señales del inglés sin problema.":pct>=.6?"¡Buen viaje! Repasa las señales donde fallaste.":"Vuelve a la Parada 1 y repasa el manual de señales.";
+  const msg=gr>=4.6?"¡Conductor experto! Lees las señales del inglés sin problema.":gr>=3?"¡Buen viaje! Repasa las señales donde fallaste.":"Vuelve a la Parada 1 y repasa el manual de señales.";
   $("#stage").innerHTML=`
     <div class="end">
       <span class="qtype">Llegaste a la meta</span>
-      <div class="big">${rec.score}<small> / ${rec.total}</small></div>
+      <div class="big">${g1(gr)}<small> / 5.0</small></div>
+      <p><span class="pill ${levelCls(gr)}">Desempeño ${level(gr)}</span> &nbsp;${rec.correct} de ${n} aciertos</p>
       <p>${msg}</p>
       <div class="cta" style="margin-top:4px">
         <button class="btn btn-primary" type="button" id="pdf">Descargar informe PDF</button>
@@ -602,8 +637,7 @@ function renderHistory(){
   $("#res-count").textContent=memHist.length?`${memHist.length} partida${memHist.length>1?"s":""} guardada${memHist.length>1?"s":""}`:"";
   $("#clear-zone").hidden=!memHist.length;
   if(!memHist.length){tb.innerHTML=`<tr><td colspan="6" class="empty">Todavía no hay partidas. Termina un reto en la Parada 2 y aparecerá aquí.</td></tr>`;return}
-  tb.innerHTML=memHist.map(r=>{const p=r.score/r.total;const c=p>=.9?"hi":p>=.6?"mid":"lo";
-    return `<tr><td>${esc(r.name)}</td><td>${esc(r.group)}</td><td>${esc(MODES[r.mode]||r.mode)}</td><td class="num"><span class="pill ${c}">${r.score}/${r.total}</span></td><td class="num">${fmtDate(r.date)}</td><td><button class="linkbtn" type="button" data-id="${r.id}">PDF</button></td></tr>`}).join("");
+  tb.innerHTML=memHist.map(r=>`<tr><td>${esc(r.name)}</td><td>${esc(r.group)}</td><td class="num">${r.correct}/${r.n}</td><td class="num"><span class="pill ${levelCls(r.grade)}">${g1(r.grade)} · ${level(r.grade)}</span></td><td class="num">${fmtDate(r.date)}</td><td><button class="linkbtn" type="button" data-id="${r.id}">PDF</button></td></tr>`).join("");
   tb.querySelectorAll("button[data-id]").forEach(b=>b.onclick=()=>makePDF(memHist.find(r=>String(r.id)===b.dataset.id)));
 }
 function bindClear(){
@@ -621,29 +655,36 @@ function makePDF(r){
   if(!r)return;
   if(!window.jspdf){toast("No se pudo cargar el generador de PDF. Revisa tu conexión.");return}
   const {jsPDF}=window.jspdf; const d=new jsPDF({unit:"mm",format:"a4"});
-  const W=210, M=16; let y=0;
+  const W=210, M=16; let y;
   d.setFillColor(27,35,45); d.rect(0,0,W,34,"F");
   d.setFillColor(242,183,5); d.rect(0,34,W,2.5,"F");
   d.setTextColor(255,255,255); d.setFont("helvetica","bold"); d.setFontSize(22); d.text("Modal Road",M,17);
-  d.setFont("helvetica","normal"); d.setFontSize(10); d.text("Informe de evaluación · Verbos modales · Inglés 8.º",M,25);
+  d.setFont("helvetica","normal"); d.setFontSize(10); d.text("Informe de evaluación · Can, must, have to, should · Inglés 8.º",M,25);
   y=48; d.setTextColor(21,32,43); d.setFontSize(11);
-  const rows=[["Estudiante",r.name],["Curso",r.group],["Tipo de reto",MODES[r.mode]||r.mode],["Fecha",fmtDate(r.date)]];
-  rows.forEach(([k,v])=>{d.setFont("helvetica","bold");d.text(k+":",M,y);d.setFont("helvetica","normal");d.text(String(v),M+32,y);y+=7});
-  d.setFont("helvetica","bold"); d.setFontSize(30); d.text(`${r.score} / ${r.total}`,W-M,58,{align:"right"});
-  d.setFontSize(9); d.setFont("helvetica","normal"); d.text(`${r.answers.filter(a=>a.ok).length} de ${r.answers.length} respuestas correctas`,W-M,65,{align:"right"});
-  y+=6; d.setDrawColor(205,213,222); d.line(M,y,W-M,y); y+=8;
-  d.setFont("helvetica","bold"); d.setFontSize(12); d.text("Detalle de respuestas",M,y); y+=8;
+  [["Estudiante",r.name],["Curso",r.group],["Aciertos",`${r.correct} de ${r.n}`],["Fecha",fmtDate(r.date)]].forEach(([k,v])=>{d.setFont("helvetica","bold");d.text(k+":",M,y);d.setFont("helvetica","normal");d.text(String(v),M+28,y);y+=7});
+  /* grade box */
+  const bx=W-M-58, by=42;
+  d.setDrawColor(27,35,45); d.setLineWidth(.6); d.roundedRect(bx,by,58,32,2,2);
+  d.setFontSize(8); d.setTextColor(86,99,115); d.text("NOTA (ESCALA 0 A 5)",bx+29,by+7,{align:"center"});
+  d.setFont("helvetica","bold"); d.setFontSize(26); d.setTextColor(21,32,43); d.text(g1(r.grade),bx+29,by+20,{align:"center"});
+  d.setFontSize(10); d.text("Desempeño "+level(r.grade),bx+29,by+27,{align:"center"});
+  y=Math.max(y,by+32)+6;
+  d.setFont("helvetica","normal"); d.setFontSize(8); d.setTextColor(86,99,115); d.text(SCALE_TXT,M,y); y+=5;
+  d.setDrawColor(205,213,222); d.setLineWidth(.3); d.line(M,y,W-M,y); y+=8;
+  d.setFont("helvetica","bold"); d.setFontSize(12); d.setTextColor(21,32,43); d.text("Detalle de respuestas",M,y); y+=8;
   r.answers.forEach((a,i)=>{
-    if(y>270){d.addPage();y=20}
+    if(y>268){d.addPage();y=20}
     d.setFontSize(10); d.setFont("helvetica","bold");
-    d.setTextColor(a.ok?31:200,a.ok?122:35,a.ok?77:44); d.text(a.ok?"OK":"X",M,y);
+    if(a.ok)d.setTextColor(31,122,77);else d.setTextColor(200,35,44);
+    d.text(a.ok?"OK":"X",M,y);
     d.setTextColor(21,32,43);
     const q=d.splitTextToSize(`${i+1}. ${a.q.replace(/[“”]/g,'"')}`,W-2*M-10); d.text(q,M+10,y); y+=q.length*5;
     d.setFont("helvetica","normal"); d.setTextColor(86,99,115);
     const line=a.ok?`Tu respuesta: ${a.chosen}`:`Tu respuesta: ${a.chosen}   ·   Correcta: ${a.correct}`;
     const l2=d.splitTextToSize(line,W-2*M-10); d.text(l2,M+10,y); y+=l2.length*5+4;
   });
-  d.setFontSize(8); d.setTextColor(140,150,160); d.text("Generado por el OVA Modal Road · I.E. Liceo Guillermo Valencia",M,290);
+  const pages=d.getNumberOfPages();
+  for(let p=1;p<=pages;p++){d.setPage(p);d.setFontSize(8);d.setTextColor(140,150,160);d.text("OVA Modal Road · I.E. Liceo Guillermo Valencia",M,290);d.text(`${p}/${pages}`,W-M,290,{align:"right"})}
   const file=`ModalRoad_${r.name.replace(/\s+/g,"_")}_${r.group}.pdf`;
   try{d.save(file);toast("Informe descargado")}catch(e){toast("La descarga no está disponible en esta vista previa.")}
 }
