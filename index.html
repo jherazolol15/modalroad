@@ -178,6 +178,11 @@ section.block{padding-block:72px}
 .r-no .r-n{color:var(--bad)}
 .r-q{font-family:var(--display);font-weight:700;font-size:16px}
 
+.tbar{background:var(--surface);border-bottom:1px solid var(--line);font-size:14px}
+.tbar .wrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;padding-block:8px}
+.tbadge{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;background:var(--must);color:#fff;padding:3px 10px;border-radius:99px}
+.tbar a{font-family:var(--display);font-weight:700;color:var(--must)}
+
 /* rules */
 .rules{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
 @media (max-width:820px){.rules{grid-template-columns:1fr}}
@@ -265,6 +270,16 @@ footer .wrap{padding-block:28px;display:flex;justify-content:space-between;gap:1
 footer b{color:var(--asphalt-fg);font-family:var(--display)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:8px;font-size:14px;z-index:40}
 </style>
+<script>
+/* Modo docente: se activa abriendo el OVA con ?docente=CLAVE y queda guardado en ese navegador.
+   Docente = tema claro · Estudiantes = tema oscuro. Cambia la clave aquí y en TEACHER_KEY. */
+(function(){var K="profe-juan",t=false;
+try{var q=new URLSearchParams(location.search).get("docente");
+if(q===K){localStorage.setItem("modalroad.teacher","1");history.replaceState(null,"",location.pathname+location.hash)}
+t=localStorage.getItem("modalroad.teacher")==="1"}catch(e){}
+document.documentElement.setAttribute("data-theme",t?"light":"dark");
+if(t)document.documentElement.classList.add("teacher")})();
+</script>
 
 </head>
 <body>
@@ -557,6 +572,7 @@ const MIX={gap:7, func:4, fix:4}; /* 15 questions */
 /* ---------- ENVÍO AL DOCENTE ----------
    Pega entre las comillas la URL de la aplicación web de Google Apps Script (termina en /exec).
    Si queda vacía, el OVA funciona igual, pero no envía resultados. */
+const SHEET_LINK = "https://docs.google.com/spreadsheets/d/1MYVQY8XVMuyjtjH3xS-CHkXSs8bpB-wO1gsxYJR8X5s/edit";
 const RESULTS_URL = "https://script.google.com/macros/s/AKfycbwcSdlYViBO2Ji8KdG-VKU24tVb7HYowFkDNbdasGDuOM4KXVPl4KQGalIHCbi7Lg-YXQ/exec";
 const TYPE_LABEL = {gap:"Completa la oración", func:"Identifica la función", fix:"Corrige el error"};
 
@@ -834,8 +850,24 @@ function makePDF(r){
   try{d.save(file);toast("Informe descargado")}catch(e){toast("La descarga no está disponible en esta vista previa.")}
 }
 
+/* ---------- TEACHER MODE ---------- */
+function teacherBar(){
+  if(!document.documentElement.classList.contains("teacher"))return;
+  const bar=document.createElement("div"); bar.className="tbar"; bar.id="tbar";
+  bar.innerHTML=`<div class="wrap"><span class="tbadge">Modo docente</span>
+    <a href="${SHEET_LINK}" target="_blank" rel="noopener">Abrir hoja de resultados ↗</a>
+    <button type="button" class="linkbtn" id="t-exit">Salir del modo docente</button></div>`;
+  document.querySelector("header.top").after(bar);
+  $("#t-exit").onclick=()=>{
+    try{localStorage.removeItem("modalroad.teacher")}catch(e){}
+    document.documentElement.classList.remove("teacher");
+    document.documentElement.setAttribute("data-theme","dark");
+    bar.remove(); toast("Modo docente desactivado en este navegador");
+  };
+}
+
 /* ---------- INIT ---------- */
-renderFilters(); renderCards(); renderSetup(); renderHistory(); bindClear();
+renderFilters(); renderCards(); renderSetup(); renderHistory(); bindClear(); teacherBar();
 flushPending(); window.addEventListener("online",flushPending);
 })();
 </script>

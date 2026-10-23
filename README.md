@@ -43,6 +43,12 @@ Objeto Virtual de Aprendizaje para enseñar los verbos modales can, must, have t
 
 Cada partida terminada agrega una fila: fecha, estudiante, curso, aciertos, nota de 0 a 5, desempeño y preguntas falladas. Si el estudiante no tiene internet al terminar, el resultado se envía la próxima vez que abra el OVA. Las cuentas gratuitas de Gmail permiten unos 100 correos al día; si ese límite se alcanza, la fila igual queda registrada en la hoja.
 
+## Modo docente
+
+- Estudiantes: el OVA se ve en tema oscuro.
+- Docente: abrir una vez `https://jherazolol15.github.io/modalroad/?docente=profe-juan`. El navegador queda en modo docente (tema claro, barra con enlace a la hoja de resultados) hasta pulsar *Salir del modo docente*.
+- La clave se cambia en el `<script>` inicial (`K="profe-juan"`). No es una contraseña segura: solo distingue la vista.
+
 ## Cómo agregar preguntas
 
 Añade un objeto al arreglo `BANK`. La opción correcta es la primera (`a:0`); el juego mezcla las opciones automáticamente.
