@@ -386,7 +386,7 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
             <dt>Nivel</dt><dd>A2 (MCER)</dd>
             <dt>Tema</dt><dd>Modal verbs: can, must, have to y should (afirmativa, negativa e interrogativa)</dd>
             <dt>Duración</dt><dd>2 sesiones de 55 min</dd>
-            <dt>Evaluación</dt><dd>Banco de 34 preguntas. Cada estudiante recibe 15 al azar (7 de completar, 4 de función y 4 de corrección), en orden distinto y con las opciones mezcladas. Nota de 0.0 a 5.0.</dd>
+            <dt>Evaluación</dt><dd>Banco de 50 preguntas. Cada estudiante recibe 15 al azar (7 de completar de un banco de 24, 4 de función de 13 y 4 de corrección de 13), en orden distinto y con las opciones mezcladas. Nota de 0.0 a 5.0.</dd>
             <dt>Autor</dt><dd>Juan Pablo Herazo Sibaja</dd>
           </dl>
         </div>
@@ -478,6 +478,14 @@ const BANK = [
   {t:"gap", q:"You ___ use your phone during the exam.", o:["mustn't","don't have to","should","can"], a:0, why:"Está prohibido: mustn't."},
   {t:"gap", q:"He ___ finish his homework before he plays video games.", tr:"Sus papás se lo exigen.", o:["has to","have to","can't","shouldn't"], a:0, why:"Obligación externa con he: has to."},
   {t:"gap", q:"___ she have to clean her room every day?", o:["Does","Do","Has","Must"], a:0, why:"Pregunta con she: Does + she + have to…?"},
+  {t:"gap", q:"Look! My little sister ___ ride a bike now. She's only five.", tr:"¡Mira! Solo tiene cinco años.", o:["can","must","should","has to"], a:0, why:"Hablamos de una habilidad nueva: can."},
+  {t:"gap", q:"It's very cold outside. You ___ wear a jacket.", tr:"Hace mucho frío afuera.", o:["should","mustn't","can't","don't have to"], a:0, why:"Es un consejo: should."},
+  {t:"gap", q:"Visitors ___ take photos in the museum. It's forbidden.", tr:"Está prohibido.", o:["mustn't","don't have to","should","can"], a:0, why:"Forbidden = prohibido: mustn't."},
+  {t:"gap", q:"The test is next month, so I ___ study tonight. I can study next week.", tr:"El examen es el próximo mes.", o:["don't have to","mustn't","can't","should"], a:0, why:"No es necesario estudiar hoy: don't have to."},
+  {t:"gap", q:"___ your father have to work on Sundays?", o:["Does","Do","Has","Can"], a:0, why:"Con your father (he): Does … have to…?"},
+  {t:"gap", q:"I ___ go out tonight. I have a lot of homework.", tr:"Tengo mucha tarea.", o:["can't","can","don't have to","should"], a:0, why:"No es posible salir: can't."},
+  {t:"gap", q:"Excuse me, ___ I use your phone? Mine is broken.", tr:"El mío está dañado.", o:["can","must","should","do"], a:0, why:"Pedir permiso: can I…?"},
+  {t:"gap", q:"We ___ listen to the teacher in class. It's a school rule.", tr:"Es una regla del colegio.", o:["have to","don't have to","can't","shouldn't"], a:0, why:"Una regla es una obligación: have to."},
 
   {t:"func", q:"“You mustn't feed the animals at the zoo.”", tr:"No debes alimentar a los animales del zoológico.", ctx:"¿Qué expresa el modal?", o:["Prohibición","Consejo","Habilidad","No es necesario"], a:0, why:"Mustn't indica que algo está prohibido."},
   {t:"func", q:"“You should go to bed early.”", ctx:"¿Qué expresa el modal?", o:["Consejo","Obligación","Prohibición","Permiso"], a:0, why:"Should da una recomendación."},
@@ -488,6 +496,10 @@ const BANK = [
   {t:"func", q:"“I have to clean my room every Saturday.”", ctx:"¿Qué expresa el modal?", o:["Obligación","Habilidad","Consejo","Permiso"], a:0, why:"Have to expresa una obligación."},
   {t:"func", q:"“You shouldn't drink soda before training.”", tr:"…gaseosa antes de entrenar.", ctx:"¿Qué expresa el modal?", o:["Consejo","Prohibición","Habilidad","No es necesario"], a:0, why:"Shouldn't es un consejo negativo, no una prohibición."},
   {t:"func", q:"“My dog can't swim.”", ctx:"¿Qué expresa el modal?", o:["Habilidad (negativa)","Prohibición","Consejo","Obligación"], a:0, why:"Can't indica que no tiene la habilidad."},
+  {t:"func", q:"\u201cCan you play the piano?\u201d", ctx:"¿Qué expresa la pregunta?", o:["Pregunta por una habilidad","Pide un consejo","Expresa una prohibición","Expresa una obligación"], a:0, why:"Can you…? pregunta si alguien sabe hacer algo."},
+  {t:"func", q:"\u201cShould I wear a jacket?\u201d", tr:"¿Debería ponerme una chaqueta?", ctx:"¿Qué expresa la pregunta?", o:["Pide un consejo","Pide permiso","Expresa una prohibición","Expresa una habilidad"], a:0, why:"Should I…? pide una recomendación."},
+  {t:"func", q:"\u201cPlayers mustn't touch the ball with their hands.\u201d", tr:"…tocar el balón con las manos.", ctx:"¿Qué expresa el modal?", o:["Prohibición","No es necesario","Consejo","Habilidad"], a:0, why:"Mustn't: está prohibido por las reglas."},
+  {t:"func", q:"\u201cDo I have to bring my dictionary tomorrow?\u201d", ctx:"¿Qué expresa la pregunta?", o:["Pregunta por una obligación","Pide un consejo","Pregunta por una habilidad","Expresa una prohibición"], a:0, why:"Do I have to…? pregunta si algo es obligatorio."},
 
   {t:"fix", q:"Elige la oración correcta.", tr:"Él sabe jugar fútbol.", o:["He can play soccer.","He cans play soccer.","He can plays soccer.","He can to play soccer."], a:0, why:"Modal sin -s + verbo base sin to."},
   {t:"fix", q:"Elige la oración correcta.", o:["You should study more.","You should to study more.","You shoulds study more.","You should studies more."], a:0, why:"Should + verbo base."},
@@ -497,7 +509,11 @@ const BANK = [
   {t:"fix", q:"Elige la pregunta correcta.", tr:"¿Él tiene que trabajar hoy?", o:["Does he have to work today?","Has he to work today?","Does he has to work today?","Do he have to work today?"], a:0, why:"Does + he + have to (sin -s) + verbo base."},
   {t:"fix", q:"Elige la pregunta correcta.", o:["Should I call my mom?","Do I should call my mom?","Should I to call my mom?","Should I calls my mom?"], a:0, why:"Should + sujeto + verbo base."},
   {t:"fix", q:"Elige la oración correcta.", tr:"No tengo que usar corbata.", o:["I don't have to wear a tie.","I haven't to wear a tie.","I don't must wear a tie.","I doesn't have to wear a tie."], a:0, why:"Negativo de have to: don't have to."},
-  {t:"fix", q:"Elige la oración correcta.", o:["They can't come to the party.","They don't can come to the party.","They can't to come to the party.","They can't comes to the party."], a:0, why:"Negativo: can't + verbo base, sin do."}
+  {t:"fix", q:"Elige la oración correcta.", o:["They can't come to the party.","They don't can come to the party.","They can't to come to the party.","They can't comes to the party."], a:0, why:"Negativo: can't + verbo base, sin do."},
+  {t:"fix", q:"Elige la oración correcta.", tr:"Ella tiene que estudiar.", o:["She has to study.","She have to study.","She has to studies.","She must to study."], a:0, why:"Con she: has to + verbo base."},
+  {t:"fix", q:"Elige la pregunta correcta.", tr:"¿Me puedo sentar aquí?", o:["Can I sit here?","Do I can sit here?","Can I to sit here?","I can sit here?"], a:0, why:"Can + sujeto + verbo base, sin do."},
+  {t:"fix", q:"Elige la oración correcta.", o:["You shouldn't eat fast food every day.","You don't should eat fast food every day.","You shouldn't to eat fast food every day.","You shouldn't eats fast food every day."], a:0, why:"Negativo: shouldn't + verbo base, sin do."},
+  {t:"fix", q:"Elige la oración correcta.", tr:"Los niños deben dormir ocho horas.", o:["Children must sleep eight hours.","Children musts sleep eight hours.","Children must to sleep eight hours.","Children must sleeping eight hours."], a:0, why:"Must + verbo base."}
 ];
 const MIX={gap:7, func:4, fix:4}; /* 15 questions */
 

@@ -13,7 +13,7 @@ Objeto Virtual de Aprendizaje para enseñar los verbos modales can, must, have t
 | Inicio | Presenta la metáfora y la ruta de aprendizaje |
 | Aprender | Tarjetas de can, must, have to y should en forma afirmativa, negativa e interrogativa, con traducción y audio |
 | Regla de oro | Estructura afirmativa, negativa e interrogativa + errores frecuentes |
-| Jugar | Reto de 15 preguntas (7 completar, 4 identificar función, 4 corregir error), algunas con traducción corta |
+| Jugar | Reto de 15 preguntas tomadas al azar de un banco de 50 (7 completar, 4 identificar función, 4 corregir error), algunas con traducción corta |
 | Resultados | Nota de 0 a 5 con nivel de desempeño, historial en el navegador e informe PDF |
 | Docente | Ficha técnica: objetivo, secuencia didáctica y referentes |
 
