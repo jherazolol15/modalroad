@@ -33,6 +33,7 @@
   --ok:#3fae7a; --bad:#ef5a5f; color-scheme:dark}
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55}
@@ -142,6 +143,28 @@ section.block{padding-block:72px}
 .vs-row p{min-width:0}
 
 .send{font-size:14px;padding:8px 12px;border-radius:6px;background:var(--surface-2)}
+
+.qnav{display:grid;gap:14px;border-top:1px solid var(--line);padding-top:16px}
+.qnav-arrows{display:flex;gap:8px}
+.nav-q{font:inherit;font-family:var(--display);font-weight:700;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border-radius:8px;border:2px solid var(--line);background:var(--bg);color:var(--fg);cursor:pointer;min-width:46px}
+.nav-q.wide{flex:1}
+.nav-q:hover:not(:disabled){border-color:var(--fg)}
+.nav-q:disabled{opacity:.35;cursor:default}
+.nav-q svg,.finish-btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+@media (max-width:420px){.nav-q span{display:none}}
+.dots{display:flex;flex-wrap:wrap;gap:6px}
+.dot-q{width:36px;height:36px;border-radius:50%;border:2px solid var(--line);background:var(--bg);color:var(--muted);font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer;font-variant-numeric:tabular-nums;padding:0}
+.dot-q:hover{border-color:var(--fg)}
+.dot-q.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.dot-q.no{background:var(--bad);border-color:var(--bad);color:#fff}
+.dot-q.cur{outline:3px solid var(--lane);outline-offset:2px}
+.qlegend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.qlegend span{display:inline-flex;align-items:center;gap:6px}
+.lg{width:12px;height:12px;border-radius:50%;border:2px solid var(--line);display:inline-block}
+.lg.ok{background:var(--ok);border-color:var(--ok)}.lg.no{background:var(--bad);border-color:var(--bad)}
+.finish-btn{justify-self:start}
+.confirm-end{border:2px solid var(--warn);border-radius:8px;padding:14px 16px;display:grid;gap:10px;background:var(--surface)}
+.confirm-end .cta{margin-top:0}
 
 /* rules */
 .rules{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:56px}
@@ -340,7 +363,9 @@ footer b{color:var(--asphalt-fg);font-family:var(--display)}
             <li>Escribe tu nombre y tu curso.</li>
             <li>Lee la oración en inglés. Algunas traen una pequeña traducción entre paréntesis.</li>
             <li>Elige una de las 4 opciones (también puedes usar las teclas 1-4).</li>
-            <li>Lee la explicación y continúa.</li>
+            <li>Muévete con las flechas ⏮ ◀ ▶ ⏭ o toca un número para saltar a esa pregunta. Puedes dejar preguntas para después.</li>
+            <li>Lee la explicación. Una vez respondida, la pregunta queda bloqueada.</li>
+            <li>Cuando termines, pulsa <b>Finalizar test</b>.</li>
             <li>Al final, descarga tu informe en PDF.</li>
           </ol>
           <p class="note" style="margin-top:10px">Cada estudiante recibe preguntas distintas, en otro orden y con las opciones mezcladas.</p>
@@ -621,39 +646,81 @@ function start(name,group){
   let qs=[];
   Object.entries(MIX).forEach(([t,k])=>{qs=qs.concat(shuffle(BANK.filter(q=>q.t===t)).slice(0,k))});
   qs=shuffle(qs).map(q=>{const order=shuffle(q.o.map((_,i)=>i));return Object.assign({},q,{o:order.map(i=>q.o[i]),a:order.indexOf(q.a)})});
-  G={name,group,qs,i:0,correct:0,answers:[]};
+  G={name,group,qs,i:0,ans:new Array(qs.length).fill(null)};
   renderQ();
 }
+const ICON={
+  first:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5v14M18 6l-7 6 7 6"/></svg>',
+  prev:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>',
+  next:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>',
+  last:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 5v14M6 6l7 6-7 6"/></svg>',
+  flag:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V4M5 4h12l-2.5 4 2.5 4H5"/></svg>'
+};
+function answeredCount(){return G.ans.filter(Boolean).length}
+function fbHTML(q,a){return `<div class="feedback ${a.ok?"good":"bad"}"><b>${a.ok?"¡Correcto!":"Casi. La respuesta es: "+esc(q.o[q.a])}</b><span>${esc(q.why)}</span></div>`}
+function go(j){
+  if(!G||j<0||j>=G.qs.length||j===G.i)return;
+  G.i=j; renderQ();
+  try{$("#stage").scrollIntoView({block:"nearest"})}catch(e){}
+}
 function renderQ(){
-  const q=G.qs[G.i], n=G.qs.length;
+  const q=G.qs[G.i], n=G.qs.length, a=G.ans[G.i];
+  const done=answeredCount(), hits=G.ans.filter(x=>x&&x.ok).length;
   const text=q.t==="gap"?esc(q.q).replace("___",'<span class="gap">___</span>'):esc(q.q);
+  const first=G.i===0, last=G.i===n-1;
   $("#stage").innerHTML=`
     <div class="game">
-      <div class="hud"><span>RETO ${G.i+1} / ${n}</span><span>${esc(G.name)}</span><span id="hits">${G.correct} ACIERTOS</span></div>
-      <div class="progress" aria-hidden="true"><i style="width:${(G.i/n)*100}%"></i></div>
+      <div class="hud"><span>PREGUNTA ${G.i+1} / ${n}</span><span>${esc(G.name)}</span><span>${done}/${n} RESPONDIDAS · ${hits} ✓</span></div>
+      <div class="progress" aria-hidden="true"><i style="width:${(done/n)*100}%"></i></div>
       <span class="qtype">${TYPE_LABEL[q.t]}</span>
       <div><p class="qtext" id="qtext">${text}</p>${q.tr?`<p class="qtr">(${esc(q.tr)})</p>`:""}</div>
       ${q.ctx?`<p class="qctx">${q.ctx}</p>`:""}
-      <div class="opts" role="group" aria-labelledby="qtext">${q.o.map((o,k)=>`<button class="opt" type="button" data-k="${k}"><kbd>${k+1}</kbd><span>${esc(o)}</span></button>`).join("")}</div>
-      <div id="fb" aria-live="polite"></div>
+      <div class="opts" role="group" aria-labelledby="qtext">${q.o.map((o,k)=>{
+        const cls=a?(k===q.a?" right":(o===a.chosen?" wrong":"")):"";
+        return `<button class="opt${cls}" type="button" data-k="${k}" ${a?"disabled":""}><kbd>${k+1}</kbd><span>${esc(o)}</span></button>`}).join("")}</div>
+      <div id="fb" aria-live="polite">${a?fbHTML(q,a):""}</div>
+      <nav class="qnav" aria-label="Moverse entre preguntas">
+        <div class="qnav-arrows">
+          <button class="nav-q" type="button" data-go="first" aria-label="Ir a la primera pregunta" title="Primera pregunta" ${first?"disabled":""}>${ICON.first}</button>
+          <button class="nav-q wide" type="button" data-go="prev" aria-label="Pregunta anterior" title="Anterior (←)" ${first?"disabled":""}>${ICON.prev}<span>Anterior</span></button>
+          <button class="nav-q wide" type="button" data-go="next" aria-label="Pregunta siguiente" title="Siguiente (→)" ${last?"disabled":""}><span>Siguiente</span>${ICON.next}</button>
+          <button class="nav-q" type="button" data-go="last" aria-label="Ir a la última pregunta" title="Última pregunta" ${last?"disabled":""}>${ICON.last}</button>
+        </div>
+        <div class="dots">${G.qs.map((_,j)=>{const x=G.ans[j];
+          return `<button class="dot-q${x?(x.ok?" ok":" no"):""}${j===G.i?" cur":""}" type="button" data-j="${j}" aria-label="Pregunta ${j+1}${x?(x.ok?", correcta":", incorrecta"):", sin responder"}" ${j===G.i?'aria-current="step"':""}>${j+1}</button>`}).join("")}</div>
+        <div class="qlegend"><span><i class="lg ok"></i>Correcta</span><span><i class="lg no"></i>Incorrecta</span><span><i class="lg"></i>Sin responder</span></div>
+        <button class="btn ${done===n?"btn-primary":"btn-dark"} finish-btn" type="button" id="finish">${ICON.flag}${done===n?"Ver mi nota":"Finalizar test"}</button>
+        <div id="confirm-end" class="confirm-end" hidden></div>
+      </nav>
     </div>`;
   $("#stage").querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.k));
+  const tgt={first:0,prev:G.i-1,next:G.i+1,last:n-1};
+  $("#stage").querySelectorAll(".nav-q").forEach(b=>b.onclick=()=>go(tgt[b.dataset.go]));
+  $("#stage").querySelectorAll(".dot-q").forEach(b=>b.onclick=()=>go(+b.dataset.j));
+  $("#finish").onclick=askFinish;
 }
 function answer(k){
-  const q=G.qs[G.i]; if(G.answers.length>G.i) return;
-  const ok=k===q.a; if(ok) G.correct++;
-  G.answers.push({q:q.q,type:q.t,chosen:q.o[k],correct:q.o[q.a],ok});
-  $("#stage").querySelectorAll(".opt").forEach((b,i)=>{b.disabled=true;if(i===q.a)b.classList.add("right");else if(i===k)b.classList.add("wrong")});
-  const last=G.i===G.qs.length-1;
-  $("#fb").innerHTML=`<div class="feedback ${ok?"good":"bad"}"><b>${ok?"¡Correcto!":"Casi. La respuesta es: "+esc(q.o[q.a])}</b><span>${esc(q.why)}</span></div>
-    <div style="margin-top:12px"><button class="btn btn-dark" id="next" type="button">${last?"Ver mi nota →":"Siguiente reto →"}</button></div>`;
-  $("#hits").textContent=G.correct+" ACIERTOS";
-  $("#next").focus({preventScroll:true});
-  $("#next").onclick=()=>{if(last)finish();else{G.i++;renderQ()}};
+  const q=G.qs[G.i]; if(G.ans[G.i])return;
+  G.ans[G.i]={q:q.q,type:q.t,chosen:q.o[k],correct:q.o[q.a],ok:k===q.a};
+  renderQ();
+  const nb=$('#stage [data-go="next"]');
+  (answeredCount()===G.qs.length||!nb||nb.disabled?$("#finish"):nb).focus({preventScroll:true});
+}
+function askFinish(){
+  const left=G.qs.length-answeredCount();
+  if(!left){finish();return}
+  const c=$("#confirm-end"); c.hidden=false;
+  c.innerHTML=`<p>Te ${left===1?"falta 1 pregunta":"faltan "+left+" preguntas"} por responder. Si finalizas ahora, cuentan como incorrectas.</p>
+    <div class="cta"><button class="btn btn-primary" type="button" id="end-no">Seguir respondiendo</button><button class="btn btn-ghost" type="button" id="end-yes">Finalizar de todas formas</button></div>`;
+  $("#end-yes").onclick=finish;
+  $("#end-no").onclick=()=>{c.hidden=true;const j=G.ans.findIndex(x=>!x);if(j===G.i)$("#stage .opt").focus();else go(j)};
+  $("#end-no").focus({preventScroll:true});
 }
 function finish(){
-  const n=G.qs.length, gr=grade(G.correct,n);
-  const rec={id:Date.now(),name:G.name,group:G.group,correct:G.correct,n,grade:gr,date:new Date().toISOString(),answers:G.answers};
+  const n=G.qs.length;
+  const answers=G.qs.map((q,j)=>G.ans[j]||{q:q.q,type:q.t,chosen:"(sin responder)",correct:q.o[q.a],ok:false});
+  const correct=answers.filter(x=>x.ok).length, gr=grade(correct,n);
+  const rec={id:Date.now(),name:G.name,group:G.group,correct,n,grade:gr,date:new Date().toISOString(),answers};
   memHist.unshift(rec); saveHist(memHist); renderHistory();
   const msg=gr>=4.6?"¡Conductor experto! Lees las señales del inglés sin problema.":gr>=3?"¡Buen viaje! Repasa las señales donde fallaste.":"Vuelve a la Parada 1 y repasa el manual de señales.";
   $("#stage").innerHTML=`
@@ -679,9 +746,12 @@ function finish(){
   }
 }
 document.addEventListener("keydown",e=>{
-  if(!G||e.target.matches("input,select,textarea"))return;
+  if(!G||!document.querySelector("#stage .game")||e.target.matches("input,select,textarea"))return;
   const n=parseInt(e.key,10);
-  if(n>=1&&n<=4){const b=$("#stage").querySelectorAll(".opt")[n-1];if(b&&!b.disabled)b.click()}
+  if(n>=1&&n<=4){const b=$("#stage").querySelectorAll(".opt")[n-1];if(b&&!b.disabled)b.click();return}
+  if(!(e.target===document.body||$("#stage").contains(e.target)))return;
+  const map={ArrowLeft:G.i-1,ArrowRight:G.i+1,Home:0,End:G.qs.length-1};
+  if(e.key in map){e.preventDefault();go(map[e.key])}
 });
 
 /* ---------- RESULTS ---------- */
